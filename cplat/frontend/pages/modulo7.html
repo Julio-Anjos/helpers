@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Módulo 7 - Cadeia de Caracteres</title>
+
+    <style>
+        code {
+            font-size: 20px;
+        }
+        span {
+            font-size: 20px;
+        }
+        p {
+          font-size: 20px;
+          text-align: justify;
+        }
+
+        li {
+          font-size: 20px;
+          text-align: justify;
+        }
+       /* Container do quiz */
+        .quiz-container {
+            background-color: #1e1e1e;
+            border-radius: 15px;
+            width: 80%;  /* Aumentei o tamanho da largura */
+            max-width: 900px;  /* Aumentei o max-width */
+            padding: 40px;  /* Aumentei o padding interno */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            transition: transform 0.5s ease;
+        }
+
+        /* Título do Quiz */
+        h1 {
+            text-align: center;
+            color: #00b0ff;
+            font-size: 50px;
+            font-weight: bold;
+            margin-bottom: 40px;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Estilos das perguntas */
+        .question {
+            font-size: 28px;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+
+        /* Estilos das opções de resposta */
+        .options button {
+            background-color: #00b0ff;
+            border: none;
+            padding: 15px 30px;
+            margin: 15px;
+            font-size: 22px;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .options button:hover {
+            background-color: #0088cc;
+            transform: translateY(-5px);
+        }
+
+        /* Feedback sobre a resposta */
+        .feedback {
+            text-align: center;
+            font-size: 24px;
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .correct {
+            color: #32cd32; /* Verde para respostas corretas */
+            background-color: rgba(50, 205, 50, 0.1);
+        }
+
+        .wrong {
+            color: #ff6347; /* Vermelho para respostas erradas */
+            background-color: rgba(255, 99, 71, 0.1);
+        }
+
+        /* Decoração com elementos de programação */
+        .programming-icon {
+            font-size: 24px;
+            color: #00b0ff;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .programming-icon i {
+            margin-right: 10px;
+        }
+
+        /* Animações de feedback */
+        .feedback {
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .code-block {
+            background-color: #1e1e1e; /* fundo escuro estilo VS Code */
+            color: #d4d4d4;           /* cor padrão do texto */
+            padding: 15px;
+            border-radius: 8px;
+            font-family: "Fira Code", "Courier New", monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            overflow-x: auto;         /* rolagem horizontal se o código for longo */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        .type {
+            color: #4ec9b0;      /* um azul-esverdeado elegante */
+            font-weight: bold;   /* destaque extra */
+        }
+        .parameter { color: #9cdcfe; }   /* azul claro para parâmetros */
+        .property  { color: #dcdcaa; }   /* amarelinho para atributos */
+
+/* exemplo de destaque de sintaxe simples */
+        .code-block .keyword { color: #569cd6; }   /* azul para palavras-chave */
+        .code-block .string { color: #ce9178; }    /* marrom-avermelhado para strings */
+        .code-block .function { color: #dcdcaa; }  /* amarelo para funções */
+        .code-block .number { color: #c0e9ff}
+        .code-block .comment { color: rgb(121, 116, 116)}
+        .code-block .logic_operator { color: rgb(219, 19, 59)}
+        .exemplo-um {
+          text-align: center;
+        }
+        .img-size {
+          height: 256px;
+          width: 360px;
+        }
+    </style>
+
+</head>
+<body style="background:#0b0f1e; color:white; font-family:sans-serif;">
+  <h1 style="font-size:30px; text-align:left;">Módulo 7: Das Letras às Palavras: Dominando Cadeias de Caracteres (Strings) em C</h1>
+    <p>Olá, exploradora, explorador do mundo da programação! Nosso último módulo foi um marco. Aprendemos a trabalhar com vetores (arrays), estruturas que nos permitem armazenar não apenas um, mas múltiplos valores do mesmo tipo sob um único nome. Isso nos deu o poder de lidar com listas de números, como as notas de uma turma, de maneira eficiente e elegante. Hoje, vamos dar um passo adiante e aplicar esse conceito poderoso a um dos tipos de dados mais ubíquos e fundamentais em qualquer área da computação: o texto. Especificamente, vamos mergulhar no mundo das cadeias de caracteres, ou, como são mais conhecidas, strings. Se um vetor de int armazena uma lista de números, uma string em C é essencialmente um vetor de char. Mas ela tem uma característica especial, um segredo que a define e que é a chave para entendermos como manipulá-la corretamente. Vamos descobrir juntos.</p>
+
+    <h2>Do Caractere Solitário à Cadeia Organizada: A Essência da String</h2>
+      <p>Até agora, trabalhamos com caracteres de forma individual.</p>
+    <pre class="code-block"><code>
+      <span class="type">char</span> letra_inicial = 'A';
+      <span class="type">char</span> pontuação = '!';
+    </code></pre>
+      <p>Usamos scanf("%c", &letra) ou getchar() para lê-los, e printf("%c", letra) para exibi-los. É como trabalhar com tijolos isolados. Mas e se quisermos construir uma palavra, uma frase, um parágrafo? Precisamos de uma sequência, uma cadeia desses tijolos. É aí que entram as strings. Em C, não existe um tipo de dado mágico chamado "string". Em vez disso, usamos um vetor de caracteres, com uma regra crucial: a string deve terminar com o caractere especial '\0' (o caractere nulo). Pense nisso como uma lista de convidados. O vetor de caracteres é o salão de festas, com um número limitado de cadeiras. A string são os convidados efetivamente presentes. O caractere '\0' é a pessoa que se senta logo após o último convidado real, sinalizando para todos que "a partir daqui, não há mais ninguém da nossa lista". Sem esse marcador, o programa continuaria "lendo" o que quer que esteja na memória após o último caractere válido, levando a comportamentos imprevisíveis - um verdadeiro pesadelo para qualquer programador.</p>
+
+    <h2>Declarando e Inicializando Strings: Dando Nome aos Nossos Textos</h2>
+      <p>A declaração de uma string é idêntica à de qualquer vetor. Precisamos definir seu tamanho máximo.</p>
+    <pre class="code-block"><code>
+      <span class="type">char</span> nome = [<span class="number">20</span>];   <span class="comment">// Uma string que pode ter até 19 caracteres + 1 para o '\0'</span>
+      <span class="type">char</span> cidade = [<span class="number">30</span>];   <span class="comment">// Até 29 caracteres + '\0'</span>
+    </code></pre>
+      <p>Por que 19 e 29, e não 20 e 30? Porque precisamos sempre reservar um espaço para o terminador '\0. Esquecer disso é um erro comum que pode levar ao "estouro de buffer". Agora, como colocar texto dentro dela? Temos algumas formas:</p>
+      <ol>
+        <li><h3>Inicialização na Declaração (quando sabemos o conteúdo de antemão):</h3></li>
+    <pre class="code-block"><code>
+      <span class="type">char</span> saudacao[] = <span class="string">"Ola"</span>;   <span class="comment">// O compilador conta 'O','l','a','\0' e cria um vetor de tamanho 4.</span>
+      <span class="type">char</span> nome[<span class="number">20</span>] = <span class="string">"Maria"</span>;   <span class="comment">// Inicializa com "Maria" e o restante fica com lixo de memória.</span>
+    </code></pre>
+      <p>Note o uso de aspas duplas (") para strings, contrastando com as aspas simples (') para caracteres simples.</p>
+        <li><h3>Inicialização por Leitura (o usuário fornece o texto):</h3></li>
+      <p>Aqui mora um dos primeiros desafios práticos. Podemos usar scanf com o especificador %s.</p>
+    <pre class="code-block"><code>
+      <span class="type">char</span> nome[<span class="number">20</span>];
+      <span class="function">printf</span>(<span class="string">"Digite uma palavra (sem espaço): "</span>);
+      <span class="function">scanf</span>(<span class="string">"%s"</span>, &palavra);     <span class="comment">// Note: não usamos o '&' aqui. Por quê?</span>
+    </code></pre>
+      <p>Porque o nome de um vetor (palavra), sem colchetes, já representa o endereço de memória onde ele começa. O scanf precisa desse endereço para saber onde colocar os caracteres lidos. No entanto, o %s do scanf para de ler ao encontrar um espaço, uma tabulação ou uma quebra de linha. Para ler uma frase inteira com espaços, precisamos de outra ferramenta.</p>
+      </ol>
+
+      <h2>Atenção: A Função gets() - Uma Faca de Dois Gumes</h2>
+        <p>Os materiais apresentam a função gets() para ler linhas completas de texto.</p>
+    <pre class="code-block"><code>
+      <span class="type">char</span> frase[<span class="number">100</span>];
+      <span class="function">printf</span>(<span class="string">"Digite uma frase: "</span>);
+      <span class="function">gets</span>(frase);     <span class="comment">// Lê tudo até o usuário pressionar Enter.</span>
+    </code></pre>
+      <p>A grande vantagem do gets() é que ele lê espaços sem problemas. A enorme desvantagem é que ele é perigosamente ingênuo. Se o usuário digitar mais de 99 caracteres (lembrando do '\0), a função vai continuar escrevendo na memória além do espaço reservado para a string frase. Isso corrompe a memória do programa e pode fazê-lo travar ou se comportar de maneira estranha. Esse é o famoso estouro de buffer (buffer overflow), uma das falhas de segurança mais exploradas na história da computação. Por isso, o uso de gets() é geralmente desencorajado em código moderno. Em módulos futuros, exploraremos alternativas mais seguras, como fgets(). Por enquanto, usaremos gets() com a consciência de seus riscos, tomando cuidado para declarar strings com tamanho suficiente para a entrada esperada.</p>
+
+    <h2>A Biblioteca string.h: Nossa Caixa de Ferramentas para Texto</h2>
+      <p>Manipular strings "na mão", caractere por caractere, é possível com loops, mas é trabalhoso. Felizmente, C oferece uma biblioteca padrão repleta de funções úteis: a string.h. Para usá-la, basta incluir #include &lt;string.h> no topo do seu programa. Vamos conhecer algumas das ferramentas mais importantes desta caixa:</p>
+      <ol>
+        <li><h3>strcpy (string copy): Copia uma string para outra.</h3></li>
+        <p>Como vimos nos materiais, não podemos simplesmente fazer string_destino = string_origem.</p>
+    <pre class="code-block"><code>
+      <span class="type">char</span> origem[<span class="number">20</span>] = <span class="string">"Texto Original"</span>;
+      <span class="type">char</span> destino[<span class="number">20</span>];   
+      <span class="function">strcpy</span>(<span class="string">"destino, origem"</span>);    <span class="comment">// Copia o conteúdo de 'origem' para 'destino'.</span>
+      <span class="function">printf</span>(<span class="string">"Destino: %s"</span>, destino);    <span class="comment">// Imprime: Destino: Texto original.</span>
+    </code></pre>
+        <li><h3>strcat (string concatenate): Junta duas strings.</h3></li>
+        <p>"Concatena" significa anexar o conteúdo de uma string ao final de outra.</p>
+    <pre class="code-block"><code>
+      <span class="type">char</span> saudacao[<span class="number">50</span>] = <span class="string">"Olá, "</span>;
+      <span class="type">char</span> nome[<span class="number">20</span>] = <span class="string">"Mundo"</span>;   
+      <span class="function">strcpy</span>(<span class="string">"saudacao, nome"</span>);    <span class="comment">// Anexa "Mundo" ao final de "Ola."</span>
+      <span class="function">puts</span>(<span class="string">"saudacao"</span>);    <span class="comment">// Imprime: Ola, Mundo</span>
+      <span class="comment">// A função 'puts' é similar ao 'printf' com '%s', mas adiciona uma quebra de linha automaticamente.</span>
+    </code></pre>
+        <li><h3>strlen (string length): Retorna o comprimento da string.</h3></li>
+        <p>Ela conta quantos caracteres existem antes do '\0'.</p>
+    <pre class="code-block"><code>
+      <span class="type">char</span> palavra[] = <span class="string">"Cachorro"</span>;
+      <span class="type">int</span> comprimento = <span class="function">strlen</span>(palavra)
+      <span class="function">printf</span>(<span class="string">"'%s' tem %d letras."</span>, palavra, comprimento); <span class="comment">// Imprime: 'Cachorro' tem 8 letras.</span>
+      </code></pre>
+
+        <li><h3>strcmp (string compare): Compara duas strings.</h3></li>
+        <p>Não podemos comparar strings usando ==. Precisamos de strcmp. Ela retorna:</p>
+        <ul>
+          <li>0 se as strings são iguais.</li>
+          <li>Um valor maior que 0 se a primeira string for "maior" (em ordem alfabética/ASCII).</li>
+          <li>Um valor menor que 0 se a primeira string for "menor".</li>
+        </ul>
+    <pre class="code-block"><code>
+      <span class="type">char</span> senha_correta[] = <span class="string">"secreta123"</span>;
+      <span class="type">char</span> senha_digitada[<span class="number">20</span>];
+
+      <span class="function">printf</span>(<span class="string">"Digite a senha: "</span>);
+      <span class="function">scanf</span>(<span class="string">"%s"</span>, senhadigitada);
+
+      <span class="keyword">if</span> (<span class="function">strcmp</span>(senha_digitada, senha_correta) == <span class="number">0</span>) {
+          <span class="function">printf</span>(<span class="string">"Acesso permitido!\n"</span>);
+      } <span class="keyword">else</span> {
+          <span class="function">printf</span>(<span class="string">"Senha Incorreta!\n"</span>);
+      }
+        </code></pre>
+      </ol>
+    <h2>Unindo Tudo: Um Exemplo Prático</h2>
+      <p>Vamos criar um programa que busca um caractere dentro de um texto, como no exemplo final do material.</p>
+    <pre class="code-block"><code>
+      #<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span>
+      #<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span>    <span class="comment">// Para usar strlen</span>
+
+      <span class="type">int</span> <span class="function">main</span>() {
+            <span class="type">char</span> texto[<span class="number">100</span>];
+            <span class="type">char</span> caractere_procurado;
+            <span class="type">int</span> i, achou = <span class="number">0</span>;   <span class="comment">// Usando uma "flag" (sinalizador)</span>
+
+            <span class="function">printf</span>(<span class="string">"Digite um texto: "</span>);
+            <span class="function">gets</span>(texto);    <span class="comment">// Cuidado! Assume-se que o texto terá menos de 100 caracteres.</span>
+
+            <span class="function">printf</span>(<span class="string">"Qual caractere deseja procurar? "</span>);
+            <span class="function">scanf</span>(<span class="string">"%c"</span>, &caractere_procurado);
+
+            <span class="comment">// Percorre a string caractere por caractere</span>
+            <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="function">strlen</span>(texto); i++){
+                <span class="keyword">if</span> (texto[i] == caractere_procurado) {
+                    <span class="function">printf</span>(<span class="string">"Caractere '%c' não foi encontrado.\n"</span>, caractere_procurado);
+                    achou = <span class="number">1</span>;    <span class="comment">// Ativa a flag</span>
+                }
+            }
+            <span class="keyword">if</span> (!achou) { <span class="comment">// Se achou continua 0 (falso)</span>
+                <span class="function">printf</span>(<span class="string">"Caracteres '%c' não foi encontrado.\n"</span>, caractere_procurado);
+            }           
+            <span class="keyword">return</span> <span class="number">0</span>;
+      }
+      </code></pre>
+      <p>Este exemplo combina tudo: declaração de string, leitura com gets, acesso a caracteres individuais (texto[i]), uso de uma flag e a função strlen para controlar o loop. No próximo módulo, continuaremos nossa exploração das estruturas de dados, provavelmente avançando para os arranjos multidimensionais (matrizes), que nos permitirão trabalhar com tabelas e grades de dados. Por hoje, o importante é praticar. Crie pequenos programas que leiam nomes, comparem palavras, ou juntem textos. Familiarize-se com a ideia de que uma string é um vetor terminado em '\0'. Quando isso se tornar natural, você terá dominado um dos conceitos mais importantes para a criação de programas que interagem de verdade com o mundo.
+<br><br>Até a próxima!</p>
+
+
+  <a href="bemvindos.php" style="color:lightblue;">Voltar</a>
+</body>
+</html>

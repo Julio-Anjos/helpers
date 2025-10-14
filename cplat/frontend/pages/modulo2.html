@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Módulo 2 - Variáveis, Operadores e Entrada de Dados em C</title>
+  <style>
+        code {
+            font-size: 20px;
+        }
+        span {
+            font-size: 20px;
+        }
+        p {
+          font-size: 20px;
+          text-align: justify;
+        }
+
+        li {
+          font-size: 20px;
+          text-align: justify;
+        }
+       /* Container do quiz */
+        .quiz-container {
+            background-color: #1e1e1e;
+            border-radius: 15px;
+            width: 80%;  /* Aumentei o tamanho da largura */
+            max-width: 900px;  /* Aumentei o max-width */
+            padding: 40px;  /* Aumentei o padding interno */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            transition: transform 0.5s ease;
+        }
+
+        /* Título do Quiz */
+        h1 {
+            text-align: center;
+            color: #00b0ff;
+            font-size: 50px;
+            font-weight: bold;
+            margin-bottom: 40px;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Estilos das perguntas */
+        .question {
+            font-size: 28px;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+
+        /* Estilos das opções de resposta */
+        .options button {
+            background-color: #00b0ff;
+            border: none;
+            padding: 15px 30px;
+            margin: 15px;
+            font-size: 22px;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .options button:hover {
+            background-color: #0088cc;
+            transform: translateY(-5px);
+        }
+
+        /* Feedback sobre a resposta */
+        .feedback {
+            text-align: center;
+            font-size: 24px;
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .correct {
+            color: #32cd32; /* Verde para respostas corretas */
+            background-color: rgba(50, 205, 50, 0.1);
+        }
+
+        .wrong {
+            color: #ff6347; /* Vermelho para respostas erradas */
+            background-color: rgba(255, 99, 71, 0.1);
+        }
+
+        /* Decoração com elementos de programação */
+        .programming-icon {
+            font-size: 24px;
+            color: #00b0ff;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .programming-icon i {
+            margin-right: 10px;
+        }
+
+        /* Animações de feedback */
+        .feedback {
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .code-block {
+            background-color: #1e1e1e; /* fundo escuro estilo VS Code */
+            color: #d4d4d4;           /* cor padrão do texto */
+            padding: 15px;
+            border-radius: 8px;
+            font-family: "Fira Code", "Courier New", monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            overflow-x: auto;         /* rolagem horizontal se o código for longo */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        .type {
+            color: #4ec9b0;      /* um azul-esverdeado elegante */
+            font-weight: bold;   /* destaque extra */
+        }
+        .parameter { color: #9cdcfe; }   /* azul claro para parâmetros */
+        .property  { color: #dcdcaa; }   /* amarelinho para atributos */
+
+/* exemplo de destaque de sintaxe simples */
+        .code-block .keyword { color: #569cd6; }   /* azul para palavras-chave */
+        .code-block .string { color: #ce9178; }    /* marrom-avermelhado para strings */
+        .code-block .function { color: #dcdcaa; }  /* amarelo para funções */
+        .code-block .number { color: #c0e9ff}
+        .code-block .comment { color: rgb(121, 116, 116)}
+        .exemplo-um {
+          text-align: center;
+        }
+        .img-size {
+          height: 256px;
+          width: 360px;
+        }
+</style>
+</head>
+<body style="background:#0b0f1e; color:white; font-family:sans-serif;">
+<h1 style="font-size:30px; text-align:left;">Módulo 2: Variáveis, Operadores e Entrada de Dados em C</h1>
+<h2>Introdução</h2>  
+  <p>Na primeira aula nós aprendemos o que significa programar, entendemos o conceito de algoritmo, vimos a estrutura básica de um programa em C e escrevemos nosso primeiro “Hello World”. Essa foi a porta de entrada para a programação. Agora, vamos dar o próximo passo: aprender a trabalhar com informações. Um programa que apenas imprime frases fixas não é muito útil. Imagine se toda vez que você quisesse calcular a área de uma mesa precisasse alterar o código e recompilar? Seria cansativo. O interessante é que o usuário possa fornecer valores e o programa consiga processar esses valores para gerar resultados. É aqui que entram os conceitos de variáveis, operadores aritméticos e comandos de entrada e saída.</p>
+
+<h2>Variáveis e Caixinhas de Memória</h2>
+  <p>Você pode imaginar uma variável como uma caixinha que guarda um valor dentro do computador. Essa caixinha tem três características:</p>
+  <ol>
+    <li>Um nome → para que possamos identificar a variável no programa.</li>
+    <li>Um tipo → que define o tipo de informação que pode ser guardada (número inteiro, número real, caractere, etc.).</li>
+    <li>Um valor → que é o dado armazenado naquele momento.</li>
+  </ol>
+  <p>Por exemplo, se criamos uma variável chamada idade do tipo inteiro e guardamos o valor 20 nela, podemos pensar assim:</p>
+  <div class="exemplo-um">
+  <img src="imagens/example-one-module-two.png" alt="Exemplo um" class="img-size"/>
+  </div>
+  <p>No C, declaramos uma variável escrevendo o tipo seguido do nome:</p>
+  <pre class="code-block"><code>
+    <span class="type">int</span> idade;
+  </code></pre>
+  <p>Aqui criamos uma variável chamada idade que pode guardar números inteiros.</br>
+  Podemos também já atribuir um valor no momento da criação:
+  </p>
+  <pre class="code-block"><code>
+    <span class="type">int</span> idade = <span class="number">20</span>;
+  </code></pre>
+  <p>Isso significa: crie uma caixinha chamada idade e coloque o número 20 dentro dela.</p>
+
+<h2>Tipos Básicos de Dados em C</h2>
+  <p>O C é uma linguagem que exige que você diga que tipo de informação cada variável vai armazenar. Os tipos básicos mais usados são:</p>
+  <ul>
+    <li>int → para números inteiros (ex.: -5, 0, 42).</li>
+    <li>float → para números reais com ponto decimal (ex.: 3.14, -0.5).</li>
+    <li>double → também para números reais, mas com maior precisão.</li>
+    <li>char → para caracteres individuais (ex.: 'a', 'X', '9').</li>
+  </ul>
+  <p>Exemplos de declaração:</p>
+    <pre class="code-block"><code>
+    <span class="type">int</span> ano = <span class="number">2025</span>;
+    <span class="type">float</span> altura = <span class="number">1.75</span>;
+    <span class="type">double</span> pi = <span class="number">3.1415926535</span>;
+    <span class="type">char</span> letra = <span class="string">'A'</span>;
+  </code></pre>
+  <p>Cada tipo ocupa um espaço diferente na memória e serve para finalidades distintas. Mais adiante, quando falarmos de eficiência, essa escolha fará diferença. Por enquanto, basta entender que cada variável precisa de um tipo adequado ao valor que vai armazenar.</p>
+
+<h2>Atribuição: o sinal de igual não é igualdade!</h2>
+  <p>No dia a dia, quando usamos o símbolo “=”, pensamos em igualdade matemática. Mas em C, o sinal de igual significa atribuição. Isso quer dizer: “o valor da direita deve ser colocado dentro da variável da esquerda”.
+  </br>Exemplo:</p>
+  <pre class="code-block"><code>
+    x = <span class="number">2</span>;
+  </code></pre>
+  <p>Esse comando significa “coloque o valor 2 dentro da variável x”.
+  </br>Um caso que costuma confundir iniciantes é:</p>
+  <pre class="code-block"><code>
+    x = x + <span class="number">1</span>;
+  </code></pre>
+  <p>Se pensarmos como matemática, essa frase parece absurda: “x é igual a x mais 1” nunca seria verdadeiro. Mas em programação isso faz sentido. O que acontece é o seguinte: o valor atual de x é usado no cálculo à direita, depois o resultado é guardado de novo na variável x.
+  </br>Exemplo prático:</p>
+  <ul>
+    <li>Se x vale 2, ao executar x = x + 1;, o lado direito é calculado: 2 + 1 = 3.</li>
+    <li>Esse valor 3 é então armazenado de volta em x.</li>
+    <li>Agora x vale 3.</li>
+  </ul>
+  <p>Esse tipo de operação é muito comum para acumuladores e contadores.</p>
+
+<h2>Operadores aritméticos</h2>
+  <p>Com variáveis criadas, podemos fazer cálculos. O C possui operadores aritméticos parecidos com os da matemática:</p>
+  <ul>
+    <li>+ → adição</li>
+    <li>- → subtração</li>
+    <li>* → multiplicação</li>
+    <li>/ → divisão</li>
+    <li>% → resto da divisão inteira</li>
+  </ul>
+  <p>Exemplo:</p>
+  <pre class="code-block"><code>
+    <span class="type">int</span> a = <span class="number">10</span>, b = <span class="number">3</span>;
+    <span class="type">int</span> soma = a + b; <span class="comment">// soma = 13</span>
+    <span class="type">int</span> subtração = a - b; <span class="comment">// subtração = 7</span>
+    <span class="type">int</span> multiplicação = a * b; <span class="comment">// multiplicação = 30</span>
+    <span class="type">int</span> divisão = a / b; <span class="comment">// divisão = 3 (divisão inteira!)</span>
+    <span class="type">int</span> resto = a % b; <span class="comment">// resto = 1</span>
+  </code></pre>
+  <p>Um ponto importante: quando usamos / entre dois inteiros, o resultado é também inteiro (a parte decimal é descartada).</p>
+
+<h2>Ordem de precedência</h2>
+  <p>Assim como na matemática, para realizarmos o cálculo de expressões numéricas devemos seguir uma ordem de precedência. A ordem de execução na linguagem C é a seguinte:</p>
+  <ol>
+    <li>Parênteses</li>
+    <li>multiplicação, divisão e resto</li>
+    <li>Adição e subtração</li>
+  </ol>
+  <p>Exemplo:</p>
+  <pre class="code-block"><code>
+    <span class="type">int</span> resultado = <span class="number">2</span> + <span class="number">3</span> * <span class="number">4</span>;
+  </code></pre>
+  <p>Aqui o resultado será 14, pois a multiplicação vem antes. Se quisermos que a soma seja feita primeiro, usamos parênteses:</p>
+  <pre class="code-block"><code>
+    <span class="type">int</span> resultado = (<span class="number">2</span> + <span class="number">3</span>) * <span class="number">4</span>; // agora resultado = 20
+  </code></pre>
+
+<h2>Entrada e saída de dados</h2>
+  <p>Até agora, nossos programas apenas exibiram mensagens fixas. Agora vamos torná-los interativos: o usuário poderá digitar valores, e o programa fará cálculos com eles.
+  </br>Para isso, usamos duas funções principais:</p>
+  <ul>
+    <li>printf → imprime mensagens na tela.</li>
+    <li>scanf → lê valores digitados pelo usuário.</li>
+  </ul>
+  <p>Exemplo de programa que lê dois números e mostra a soma:</p>
+  <pre class="code-block"><code>
+    #<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span>
+        <span class="type">int</span> <span class="function">Main</span>()
+        {
+          <span class="type">int</span> a, b, soma;
+
+          <span class="function">printf</span>(<span class="string">"Digite o primeiro número:\n"</span>);
+          <span class="function">scanf</span>(<span class="string">"%d"</span>, &a);
+
+          <span class="function">printf</span>(<span class="string">"Digite o segundo número:\n"</span>);
+          <span class="function">scanf</span>(<span class="string">"%d"</span>, &b);
+
+          soma = a + b;
+
+          <span class="function">printf</span>(<span class="string">"A soma de %d e %d é %d\n"</span>, a, b, soma); 
+
+          <span class="keyword">return</span> <span class="number">0</span>;
+        }
+  </code></pre>
+  <p>Explicando:</p>
+  <ul>
+    <li>O %d dentro de scanf e printf é um especificador de formato, usado para inteiros.</li>
+    <li>No scanf, usamos o símbolo & antes da variável para indicar o endereço de memória onde o valor digitado deve ser guardado.</li>
+    <li>No printf, usamos %d para mostrar o valor armazenado.</li>
+  </ul>
+
+<h2>Conclusão</h2>
+  <p>Neste módulo, avançamos bastante em relação ao primeiro contato. Agora entendemos que programas não servem apenas para imprimir frases fixas, mas sim para trabalhar com dados fornecidos pelo usuário. Aprendemos que variáveis são caixinhas de memória que armazenam valores, que existem diferentes tipos de dados, que o sinal de igual em C significa atribuição, que podemos realizar operações aritméticas com variáveis, respeitando regras de precedência, e que podemos interagir com o usuário através do scanf e printf. Com isso, já temos base para construir programas simples e úteis, que recebem dados, fazem cálculos e apresentam resultados. No próximo módulo, vamos explorar como os programas podem tomar decisões, utilizando estruturas condicionais como if e else. Isso permitirá que nossos programas se tornem inteligentes, capazes de reagir de forma diferente dependendo da situação.</p>
+  <a href="bemvindos.php" style="color:lightblue;">Voltar</a>
+</body>
+</html>

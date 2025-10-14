@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Módulo 3 - Estruturas de Decisão em C</title>
+    <style>
+        code {
+            font-size: 20px;
+        }
+        span {
+            font-size: 20px;
+        }
+        p {
+          font-size: 20px;
+          text-align: justify;
+        }
+
+        li {
+          font-size: 20px;
+          text-align: justify;
+        }
+       /* Container do quiz */
+        .quiz-container {
+            background-color: #1e1e1e;
+            border-radius: 15px;
+            width: 80%;  /* Aumentei o tamanho da largura */
+            max-width: 900px;  /* Aumentei o max-width */
+            padding: 40px;  /* Aumentei o padding interno */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            transition: transform 0.5s ease;
+        }
+
+        /* Título do Quiz */
+        h1 {
+            text-align: center;
+            color: #00b0ff;
+            font-size: 50px;
+            font-weight: bold;
+            margin-bottom: 40px;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Estilos das perguntas */
+        .question {
+            font-size: 28px;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+
+        /* Estilos das opções de resposta */
+        .options button {
+            background-color: #00b0ff;
+            border: none;
+            padding: 15px 30px;
+            margin: 15px;
+            font-size: 22px;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .options button:hover {
+            background-color: #0088cc;
+            transform: translateY(-5px);
+        }
+
+        /* Feedback sobre a resposta */
+        .feedback {
+            text-align: center;
+            font-size: 24px;
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .correct {
+            color: #32cd32; /* Verde para respostas corretas */
+            background-color: rgba(50, 205, 50, 0.1);
+        }
+
+        .wrong {
+            color: #ff6347; /* Vermelho para respostas erradas */
+            background-color: rgba(255, 99, 71, 0.1);
+        }
+
+        /* Decoração com elementos de programação */
+        .programming-icon {
+            font-size: 24px;
+            color: #00b0ff;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .programming-icon i {
+            margin-right: 10px;
+        }
+
+        /* Animações de feedback */
+        .feedback {
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .code-block {
+            background-color: #1e1e1e; /* fundo escuro estilo VS Code */
+            color: #d4d4d4;           /* cor padrão do texto */
+            padding: 15px;
+            border-radius: 8px;
+            font-family: "Fira Code", "Courier New", monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            overflow-x: auto;         /* rolagem horizontal se o código for longo */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        .type {
+            color: #4ec9b0;      /* um azul-esverdeado elegante */
+            font-weight: bold;   /* destaque extra */
+        }
+        .parameter { color: #9cdcfe; }   /* azul claro para parâmetros */
+        .property  { color: #dcdcaa; }   /* amarelinho para atributos */
+
+/* exemplo de destaque de sintaxe simples */
+        .code-block .keyword { color: #569cd6; }   /* azul para palavras-chave */
+        .code-block .string { color: #ce9178; }    /* marrom-avermelhado para strings */
+        .code-block .function { color: #dcdcaa; }  /* amarelo para funções */
+        .code-block .number { color: #c0e9ff}
+        .code-block .comment { color: rgb(121, 116, 116)}
+        .exemplo-um {
+          text-align: center;
+        }
+        .img-size {
+          height: 256px;
+          width: 360px;
+        }
+</style>
+</head>
+<body style="background:#0b0f1e; color:white; font-family:sans-serif;">
+<h1 style="font-size:30px; text-align:left;">Módulo 3: Estruturas de Condição em C</h1>
+<h2>Introdução</h2>
+  <p>Nos dois primeiros módulos aprendemos a base: vimos o que é um algoritmo, como ele se transforma em programa, conhecemos variáveis, tipos de dados e operadores aritméticos. Também aprendemos a interagir com o usuário por meio do teclado e a exibir resultados na tela. Até aqui, porém, todos os programas que escrevemos eram lineares. Eles seguiam do início ao fim sempre da mesma maneira, sem mudar o comportamento conforme os dados fornecidos. Mas no mundo real, nem sempre o resultado é único: muitas vezes precisamos escolher caminhos diferentes dependendo da situação. Pense em um caixa eletrônico: se a senha digitada estiver correta, o sistema libera o acesso. Caso contrário, ele bloqueia a operação. Ou em um jogo: se o jogador encostar em um obstáculo, perde pontos; se encostar em uma moeda, ganha pontos. Essas situações mostram que a lógica precisa avaliar condições e tomar decisões. É exatamente isso que aprenderemos neste módulo: como usar estruturas de seleção em C para permitir que nossos programas pensem e escolham entre diferentes caminhos.</p>
+
+<h2>Condições lógicas: verdadeiros e falsos</h2>
+  <p>Uma condição lógica é uma expressão que só pode ter dois resultados possíveis: verdadeiro ou falso.
+  </br>Por exemplo:</p>
+  <ul>
+    <li>5 > 2 → verdadeiro.</li>
+    <li>10 == 3 → falso.</li>
+    <li>x != 0 → verdadeiro se x for diferente de zero.</li>
+  </ul>
+  <p>No C, o valor 0 é considerado falso. Qualquer outro valor é interpretado como verdadeiro.</p>
+  <h3>Operadores Adicionais</h3>
+  <p>São os que comparam valores:</p>
+  <ul>
+    <li>&lt; → menor que</li>
+    <li>&lt;= → menor ou igual a</li>
+    <li>> → maior que</li>
+    <li>>= → maior ou igual a</li>
+    <li>== → igual a</li>
+    <li>!= → diferente de</li>
+  </ul>
+  <p>Exemplo:</p>
+  <pre class="code-block"><code>
+    x > y  <span class="comment">// verdadeiro se x for maior que y</span>
+    idade == <span class="number"> 18</span>  <span class="comment">// verdadeiro se idade for exatamente 18</span>
+    nota != <span class="number">10</span>  <span class="comment">// verdadeiro se nota não for igual a 10</span>
+  </code></pre>
+
+<h2>O comando if em C</h2>
+  <p>O comando mais básico de consição em C é o if. Sua forma geral é:</p>
+  <pre class="code-block"><code>
+    <span class="keyword">if</span>(condicao)
+    {
+      <span class="comment">// comandos que serão executados se a condição for verdadeira</span>
+    }
+  </code></pre>
+  <p>Se a condição dentro dos parênteses for verdadeira, o bloco de comandos entre chaves é executado. Se for falsa, o programa simplesmente pula o bloco e segue adiante.
+  </br>Exemplo:</p>
+  <pre class="code-block"><code>
+    <span class="type">int</span> idade = <span class="number">20</span>;
+
+    <span class="keyword">if</span>(idade >= <span class="number">18</span>)
+    {
+        <span class="function">printf</span>(<span class="string">"Você é maior de idade!\n"</span>);
+    }
+  </code></pre>
+  <p>Aqui, como idade >= 18 é verdadeiro, a mensagem será exibida.</p>
+  <h3>O if...else</h3>
+  <p>Muitas vezes precisamos dizer o que fazer se for verdadeiro e o que fazer se for falso. Para isso existe o else:</p>
+    <pre class="code-block"><code>
+    <span class="type">int</span> idade = <span class="number">20</span>;
+
+    <span class="keyword">if</span>(idade >= <span class="number">18</span>){
+        <span class="function">printf</span>(<span class="string">"Você é maior de idade.\n"</span>);
+    } <span class="keyword">else</span>{
+        <span class="function">printf</span>(<span class="string">"Você é menor de idade.\n"</span>);
+    }
+  </code></pre>
+  <p>Esse programa sempre exibirá uma das duas mensagens, dependendo da idade informada.</p>
+
+<h2>Exemplo prático: ponto no plano cartesiano</h2>
+  <p>Vamos aplicar isso em um problema clássico: identificar em que região do plano cartesiano um ponto (x, y) está localizado.</p>
+  <ul>
+    <li>Se x > 0 e y > 0 → o ponto está no primeiro quadrante.</li>
+    <li>Se x &lt; 0 e y > 0 → está no segundo quadrante.</li>
+    <li>Se x &lt; 0 e y &lt; 0 → está no terceiro quadrante.</li>
+    <li>Se x > 0 e y &lt; 0 → está no quarto quadrante.</li>
+    <li>Se x = 0 e y = 0 → está na origem.</li>
+    <li>Se apenas x = 0 → está sobre o eixo Y.</li>
+    <li>Se apenas y = 0 → está sobre o eixo X.</li>
+  </ul>
+  <p>Podemos representar esse raciocínio com um fluxograma ou em pseudocódigo, mas no C ele fica assim:</p>
+  <pre class="code-block"><code>
+    #<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span>
+        <span class="type">int</span> <span class="function">Main</span>()
+        {
+          <span class="type">int</span> x, y;
+
+          <span class="function">printf</span>(<span class="string">"Digite as coordenadas x e y: "</span>);
+          <span class="function">scanf</span>(<span class="string">"%d %d", </span>, &x, &y);
+
+          <span class="keyword">if</span>(x == <span class="number">0</span> && y == <span class="number">0</span>)
+            <span class="function">printf</span>(<span class="string">"Origem\n"</span>);
+          <span class="keyword">else if</span>(x == <span class="number">0</span>)
+            <span class="function">printf</span>(<span class="string">"Eixo Y\n"</span>);
+          <span class="keyword">else if</span>(y == <span class="number">0</span>)
+            <span class="function">printf</span>(<span class="string">"Eixo X\n"</span>);
+          <span class="keyword">else if</span>(x > <span class="number">0</span> && y > <span class="number">0</span>)
+            <span class="function">printf</span>(<span class="string">"Primeiro quadrante\n"</span>);
+          <span class="keyword">else if</span>(x &lt; <span class="number">0</span> && y > <span class="number">0</span>)
+            <span class="function">printf</span>(<span class="string">"Segundo quadrante\n"</span>);
+          <span class="keyword">else if</span>(x &lt; <span class="number">0</span> && y &lt; <span class="number">0</span>)
+            <span class="function">printf</span>(<span class="string">"Terceiro quadrante\n"</span>);
+          <span class="keyword">else if</span>(x > <span class="number">0</span> && y &lt; <span class="number">0</span>)
+            <span class="function">printf</span>(<span class="string">"Quarto quadrante\n"</span>);
+          
+          <span class="keyword">return</span> <span class="number">0</span>;
+        }          
+  </code></pre>
+  <p>Perceba como o programa toma decisões sucessivas até chegar ao caso correto.</p>
+
+<h2>Operadores lógicos</h2>
+  <p>Muitas condições são compostas por mais de um teste. Para isso, usamos os operadores lógicos:</p>
+  <ul>
+    <li>&& (E lógico): verdadeiro apenas se ambas as condições forem verdadeiras.</li>
+    <li>|| (OU lógico): verdadeiro se pelo menos uma das condições for verdadeira.</li>
+    <li>! (NÃO lógico): inverte o valor da condição (verdadeiro vira falso, falso vira verdadeiro).</li>
+  </ul>
+  <p>Exemplos:</p>
+  <pre class="code-block"><code>
+    <span class="keyword">if</span>(idade >= <span class="number">18</span> && idade &lt;= <span class="number">100</span>)
+        <span class="function">printf</span>(<span class="string">"Adulto\n"</span>);
+
+    <span class="keyword">if</span>(nota == <span class="number">10</span> || nota == <span class="number">9</span>)
+        <span class="function">printf</span>(<span class="string">"Excelente\n"</span>);
+
+    <span class="keyword">if</span>(!(x == <span class="number">0</span>))
+        <span class="function">printf</span>(<span class="string">"X não é igual a zero\n"</span>);
+  </code></pre>
+  <h3>Tabela verdade</h3>
+  <ul>
+    <li>Para &&: só é verdadeiro se os dois lados forem verdadeiros.</li>
+    <li>Para ||: basta um dos lados ser verdadeiro.</li>
+    <li>Para !: inverte o resultado.</li>
+  </ul>
+  <p>Isso é essencial para expressar situações complexas, como “o aluno passa de ano se a média for maior ou igual a 7 e a frequência for maior que 75%</p>
+
+<h2>Decisões aninhadas</h2>
+  <p>Às vezes, precisamos de um if dentro de outro if. Isso se chama seleção aninhada.
+  </br>Exemplo:</p>
+  <pre class="code-block"><code>
+    <span class="keyword">if</span> (a > <span class="number">10</span>)
+    {
+      <span class="keyword">if</span> (b &lt; <span class="number">5</span>)
+        <span class="function">printf</span>(<span class="string">"A é maior que 10 e B é menor que 5\n"</span>);
+    }
+  </code></pre>
+  <p>Esse código só exibe a mensagem se ambas as condições forem verdadeiras. É equivalente a escrever:</p>
+  <pre class="code-block"><code>
+    <span class="keyword">if</span>(a > <span class="number">10</span> && b &lt; <span class="number">5</span>)
+      <span class="function">printf</span>(<span class="string">"A é maior que 10 e B é menor que 5\n"</span>);
+  </code></pre>
+  <p>Aninhamento é útil, mas pode deixar o código confuso. Sempre que possível, simplifique usando operadores lógicos.</p>
+
+<h2>Precedência em Operadores Lógicos</h2>
+  <p>Assim como nos operadores númericos existe uma ordem de avaliação, no C, há ua precedência dos operadores lógicos e relacionais. Sua ordem é:</p>
+  <ol>
+    <li>&lt;, &lt;=, >, >=</li>
+    <li>==, !=</li>
+    <li>&&</li>
+    <li>||</li>
+  </ol>
+  <pre class="code-block"><code>
+    <span class="keyword">if</span> (x != <span class="number">10</span> || y > <span class="number">1</span> && y <span class="number">10</span>)
+  </code></pre>
+  <p>primeiro são avaliados os >, &lt;, depois o !=, em seguida o && e por último o ||.
+  </br>Para evitar confusões e tornar o código mais claro, recomenda-se sempre usar parênteses:</p>
+    <pre class="code-block"><code>
+  <span class="keyword">if</span> ( (x != <span class="number">10</span>) || ( (y > <span class="number">1</span>) && (y <span class="number">10</span>) ) )
+  </code></pre>
+  <p>Isso facilita a leitura, tanto para você quanto para qualquer outra pessoa que veja o código.</p>
+
+<h2>Conclusão</h2>
+  <p>Neste módulo, demos um passo fundamental: aprendemos a fazer nossos programas tomarem decisões. Vimos como usar o comando if e if...else, como combinar condições com operadores lógicos, como organizar seleções aninhadas e como cuidar da precedência entre operadores. Agora, nossos programas já não são mais lineares. Eles podem responder de maneiras diferentes dependendo das entradas do usuário. Essa é a essência da programação condicional. No próximo módulo, vamos expandir ainda mais a capacidade dos nossos programas, aprendendo a repetir instruções várias vezes com as estruturas de repetição. Isso permitirá automatizar tarefas e processar grandes quantidades de dados com poucas linhas de código.</p>
+</html>

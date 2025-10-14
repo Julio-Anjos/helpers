@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Módulo 8 - Arranjos multidimensionais</title>
+
+      <style>
+        code {
+            font-size: 20px;
+        }
+        span {
+            font-size: 20px;
+        }
+        p {
+          font-size: 20px;
+          text-align: justify;
+        }
+
+        li {
+          font-size: 20px;
+          text-align: justify;
+        }
+       /* Container do quiz */
+        .quiz-container {
+            background-color: #1e1e1e;
+            border-radius: 15px;
+            width: 80%;  /* Aumentei o tamanho da largura */
+            max-width: 900px;  /* Aumentei o max-width */
+            padding: 40px;  /* Aumentei o padding interno */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            transition: transform 0.5s ease;
+        }
+
+        /* Título do Quiz */
+        h1 {
+            text-align: center;
+            color: #00b0ff;
+            font-size: 50px;
+            font-weight: bold;
+            margin-bottom: 40px;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Estilos das perguntas */
+        .question {
+            font-size: 28px;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+
+        /* Estilos das opções de resposta */
+        .options button {
+            background-color: #00b0ff;
+            border: none;
+            padding: 15px 30px;
+            margin: 15px;
+            font-size: 22px;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .options button:hover {
+            background-color: #0088cc;
+            transform: translateY(-5px);
+        }
+
+        /* Feedback sobre a resposta */
+        .feedback {
+            text-align: center;
+            font-size: 24px;
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .correct {
+            color: #32cd32; /* Verde para respostas corretas */
+            background-color: rgba(50, 205, 50, 0.1);
+        }
+
+        .wrong {
+            color: #ff6347; /* Vermelho para respostas erradas */
+            background-color: rgba(255, 99, 71, 0.1);
+        }
+
+        /* Decoração com elementos de programação */
+        .programming-icon {
+            font-size: 24px;
+            color: #00b0ff;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .programming-icon i {
+            margin-right: 10px;
+        }
+
+        /* Animações de feedback */
+        .feedback {
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .code-block {
+            background-color: #1e1e1e; /* fundo escuro estilo VS Code */
+            color: #d4d4d4;           /* cor padrão do texto */
+            padding: 15px;
+            border-radius: 8px;
+            font-family: "Fira Code", "Courier New", monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            overflow-x: auto;         /* rolagem horizontal se o código for longo */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        .type {
+            color: #4ec9b0;      /* um azul-esverdeado elegante */
+            font-weight: bold;   /* destaque extra */
+        }
+        .parameter { color: #9cdcfe; }   /* azul claro para parâmetros */
+        .property  { color: #dcdcaa; }   /* amarelinho para atributos */
+
+/* exemplo de destaque de sintaxe simples */
+        .code-block .keyword { color: #569cd6; }   /* azul para palavras-chave */
+        .code-block .string { color: #ce9178; }    /* marrom-avermelhado para strings */
+        .code-block .function { color: #dcdcaa; }  /* amarelo para funções */
+        .code-block .number { color: #c0e9ff}
+        .code-block .comment { color: rgb(121, 116, 116)}
+        .code-block .logic_operator { color: rgb(219, 19, 59)}
+        .exemplo-um {
+          text-align: center;
+        }
+        .img-size {
+          height: 256px;
+          width: 360px;
+        }
+    </style>
+
+</head>
+<body style="background:#0b0f1e; color:white; font-family:sans-serif;">
+  <h1 style="font-size:30px; text-align:left;">Módulo 8: Do Linear ao Tabular - Explorando Arranjos Multidimensionais (Matrizes) em C</h1>
+    <p>Olá! Nos últimos dois módulos, demos saltos conceituais importantes. Primeiro, aprendemos a agrupar dados homogêneos em vetores, saindo da visão de variáveis isoladas para trabalhar com coleções. Depois, aplicamos esse conceito ao mundo do texto, descobrindo que strings são, em essência, vetores de caracteres com uma regra de ouro: o terminador \0. Hoje, vamos expandir ainda mais essa ideia. E se não bastasse uma única dimensão? E se nossos dados naturalmente se organizam em linhas e colunas, como uma planilha, uma imagem digital ou um tabuleiro de jogo? É aqui que os arranjos multidimensionais, em especial as matrizes (arranjos bidimensionais), entram em cena. Vamos sair da rua (o vetor) e entrar no quarteirão (a matriz).<p>
+    <h2>Da Fila à Grade: A Necessidade de uma Segunda Dimensão</h2>
+      <p>Pense em um vetor como uma longa fila única de cadeiras em um auditório. Cada cadeira tem um número sequencial (o índice). Agora, imagine um auditório com fileiras e colunas de cadeiras. Para encontrar um assento específico, você precisa de duas informações: o número da fileira (linha) e o número da cadeira dentro da fileira (coluna). Uma matriz é exatamente isso: uma estrutura de dados organizada em linhas e colunas. Por exemplo, suponha que precisamos armazenar as notas de 5 alunos em 2 avaliações diferentes. Com vetores, poderíamos ter:</p>
+      <ul>
+        <li>float nota_av1[5]; para a primeira avaliação.</li>
+        <li>float nota_av2[5]; para a segunda avaliação.</li>
+      </ul>
+      <p>Isso funciona, mas é desorganizado. E se fossem 5 avaliações? Teríamos 5 vetores separados. Uma matriz resolve isso elegantemente, agrupando todas as notas em uma única estrutura:</p>
+      <ul>
+    <pre class="code-block"><code>
+      <span class="type">float</span> notas[<span class="number">5</span>][<span class="number">2</span>];    <span class="comment">// 5 linhas (alunos) x 2 colunas (avaliações)</span>
+      </ul>
+    </code></pre>
+      <p>Nesta matriz notas:</p>
+      <ul>
+        <li>notas[0][0] é a nota da AV1 do primeiro aluno.</li>
+        <li>notas[0][1] é a nota da AV2 do primeiro aluno.</li>
+        <li>notas[1][0] é a nota da AV1 do segundo aluno.</li>
+      </ul>
+      <p>E assim por diante. Toda a informação relacionada está contida em um único "recipiente" lógico. A declaração geral é tipo nome_matriz[numero_linhas][numero_colunas];.</p>
+    
+    <h2>Inicializando e Percorrendo Matrizes: A Dança dos Laços Aninhados</h2>
+      <p>Assim como percorremos um vetor com um loop for, percorrer uma matriz exige laços aninhados. Geralmente, usamos um loop externo para iterar pelas linhas e um loop interno para iterar pelas colunas de cada linha. É como ler um texto: você vai linha por linha, e em cada linha, palavra por palavra (ou coluna por coluna). Vamos preencher nossa matriz de notas:</p>
+      <ul>
+    <pre class="code-block"><code>
+      #<span class="keyword">define</span> NUM_ALUNOS <span class="number">5</span>
+      #<span class="keyword">define</span> NUM_NOTAS <span class="number">2</span>
+      <span class="type">float</span> notas[NUM_ALUNOS][NUM_NOTAS];
+      <span class="type">int</span> i, j;
+
+      <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; NUM_ALUNOS; i++) {    <span class="comment">// Loop externo: para cada ALUNO (linha)</span>
+          <span class="function">printf</span>(<span class="string">"Aluno %d:\n"</span>, i+1);
+          <span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; NUM_NOTAS; j++) {    <span class="comment">// Loop interno: para cada NOTA (coluna) desse aluno</span>
+              <span class="function">printf</span>(<span class="string">"Digite a nota %d: "</span>, j+1);
+              <span class="function">scanf</span>(<span class="string">"%f"</span>, &amp;notas[i][j]);
+          }
+      }
+    </code></pre>
+      </ul>
+      <p>A chave aqui é entender a hierarquia: Para cada valor de i (cada aluno), o loop interno j executa completamente (para as duas notas). Primeiro, i=0 (primeiro aluno) e j varia de 0 a 1 (primeira e segunda nota). Só então i incrementa para 1, e o processo se repete. Podemos inicializar uma matriz na declaração, usando chaves aninhadas para maior clareza:</p>
+      <ul>
+    <pre class="code-block"><code>
+      <span class="type">int</span> matriz_exemplo[<span class="number">2</span>][<span class="number">3</span>] = { {<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>},    <span class="comment">// Valores da linha 0</span>
+                                   {<span class="number">40</span>, <span class="number">50</span>, <span class="number">60</span>} }    <span class="comment">// Valores da linha 1</span>
+      </ul>
+    </code></pre>
+    <h2>Operações Comuns com Matrizes: Extraindo Significado dos Dados</h2>
+      <p>A verdadeira utilidade das matrizes aparece quando começamos a processá-las. Vamos revisitar alguns exemplos dos seus materiais, explicando a lógica por trás deles.</p>
+      <ol>
+        <li><h3>Encontrar o Maior Valor de Cada Linha:</h3></li>
+        <p>A ideia é isolar cada linha e tratar seus elementos como um vetor independente.</p>
+    <pre class="code-block"><code>
+      <span class="type">int</span> maior;
+      <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; NUM_ALUNOS; i++) {
+          maior = notas[i][<span class="number">0</span>];    <span class="comment">// Assume que a primeira nota do aluno 'i' é a maior</span>
+          <span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; NUM_NOTAS; j++) {   <span class="comment">// Começa de 1 porque já usamos o índice 0</span>
+              <span class="keyword">if</span> (notas[i][j] > maior) {
+                  maior = notas[i][j];
+              }
+          }
+          <span class="function">printf</span>(<span class="string">"Maior nota do aluno %d: %d\n"</span>, i+1, maior);
+      }
+    </code></pre>
+        <p>Para cada aluno (linha), nós "esquecemos" das outras linhas e focamos apenas em comparar as notas dele entre si.</p>
+        <li><h3>Calcular a Média de Cada Coluna:</h3></li>
+        <p>Agora, a perspectiva muda. Queremos analisar como foi cada avaliação (coluna) considerando todos os alunos.</p>
+    <pre class="code-block"><code>
+      <span class="type">float</span> soma, media;
+      <span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; NUM_NOTAS; j++) {   <span class="comment">// Loop externo: para cada AVALIAÇÃO (coluna)</span>
+          soma = <span class="number">0</span>
+          <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; NUM_ALUNOS; i++) {
+                soma += notas[i][j];
+          }
+          media = soma / NUM_ALUNOS;
+          <span class="function">printf</span>(<span class="string">"Media da avaliação %d: %.2f\n"</span>, j+1, media);
+      }
+      </code></pre>
+      <p>Perceba a inversão: o loop externo agora é sobre as colunas (j), e o interno sobre as linhas (i). Isso ilustra a flexibilidade do acesso aos dados.</p>
+      </ol>
+    <h2>Cuidados e Boas Práticas: Acessando o Mundo Tabular com Segurança</h2>
+    <ol>
+      <li>Índices Começam em Zero: Assim como nos vetores, a primeira linha é a 0 e a primeira coluna é a 0. matriz[0][0] é o canto superior esquerdo.</li>
+      <li>Limites são Sagrados: Acessar matriz[5][2] em uma matriz declarada como [5][2] é um erro grave (estouro de limite). Os índices válidos vão de [0][0] a [4][1].</li>
+      <li>Clareza na Lógica: Use nomes de variáveis significativos para os índices. Em vez de i e j, linha e coluna ou aluno e prova tornam o código muito mais legível.</li>
+      <li>A Ordem dos Loops Importa: Percorrer uma matriz "por linhas" (linha externa, coluna interna) é geralmente mais eficiente devido à forma como a memória do computador é organizada (armazenamento row-major).</li>
+    </ol>
+    <h2>Para Além da Segunda Dimensão: Um Vislumbre do Cubo de Dados</h2>
+    <p>A linguagem C não para nas duas dimensões. Podemos ter arranjos de três, quatro ou mais dimensões. Um arranjo tridimensional, por exemplo, pode ser pensado como um cubo de dados ou uma pilha de matrizes. O exemplo clássico do material é armazenar notas de alunos de várias turmas:</p>
+    <ul>
+    <pre class="code-block"><code>
+      #<span class="keyword">define</span> NUM_TURMAS <span class="number">2</span>
+      #<span class="keyword">define</span> NUM_ALUNOS <span class="number">5</span>
+      #<span class="keyword">define</span> NUM_NOTAS <span class="number">2</span>
+      <span class="type">float</span> boletim[NUM_TURMAS][NUM_ALUNOS][NUM_NOTAS];
+    </code></pre>
+    </ul>
+    <p>Para acessar a segunda nota do terceiro aluno da primeira turma, usamos: boletim[0][2][1]. Percorrer uma estrutura dessas exigiria três loops aninhados. Embora menos comum, é poderoso para modelar problemas complexos. No próximo módulo, provavelmente consolidaremos esse conhecimento, talvez entrando em tópicos como busca e ordenação em vetores, ou então começaremos a explorar como organizar nosso código em funções, que é o próximo grande salto para escrever programas bem estruturados e modulares. Por hoje, o exercício é mentalizar a estrutura de grade. Desenhe matrizes no papel. Pratique a lógica dos loops aninhados, entendendo que o loop interno é executado integralmente para cada passo do loop externo. Quando você conseguir enxergar mentalmente esse processo, as matrizes terão deixado de ser um conceito abstrato para se tornar uma ferramenta concreta e extremamente útil.
+<br><br>Até a próxima!</p>
+  <a href="bemvindos.php" style="color:lightblue;">Voltar</a>
+</body>
+</html>

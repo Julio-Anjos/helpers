@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Módulo 10 - Ponteiros e Passagem por Referência em Funções</title>
+
+  <style>
+        code {
+            font-size: 20px;
+        }
+        span {
+            font-size: 20px;
+        }
+        p {
+          font-size: 20px;
+          text-align: justify;
+        }
+
+        li {
+          font-size: 20px;
+          text-align: justify;
+        }
+       /* Container do quiz */
+        .quiz-container {
+            background-color: #1e1e1e;
+            border-radius: 15px;
+            width: 80%;  /* Aumentei o tamanho da largura */
+            max-width: 900px;  /* Aumentei o max-width */
+            padding: 40px;  /* Aumentei o padding interno */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            transition: transform 0.5s ease;
+        }
+
+        /* Título do Quiz */
+        h1 {
+            text-align: center;
+            color: #00b0ff;
+            font-size: 50px;
+            font-weight: bold;
+            margin-bottom: 40px;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Estilos das perguntas */
+        .question {
+            font-size: 28px;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+
+        /* Estilos das opções de resposta */
+        .options button {
+            background-color: #00b0ff;
+            border: none;
+            padding: 15px 30px;
+            margin: 15px;
+            font-size: 22px;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .options button:hover {
+            background-color: #0088cc;
+            transform: translateY(-5px);
+        }
+
+        /* Feedback sobre a resposta */
+        .feedback {
+            text-align: center;
+            font-size: 24px;
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .correct {
+            color: #32cd32; /* Verde para respostas corretas */
+            background-color: rgba(50, 205, 50, 0.1);
+        }
+
+        .wrong {
+            color: #ff6347; /* Vermelho para respostas erradas */
+            background-color: rgba(255, 99, 71, 0.1);
+        }
+
+        /* Decoração com elementos de programação */
+        .programming-icon {
+            font-size: 24px;
+            color: #00b0ff;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .programming-icon i {
+            margin-right: 10px;
+        }
+
+        /* Animações de feedback */
+        .feedback {
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .code-block {
+            background-color: #1e1e1e; /* fundo escuro estilo VS Code */
+            color: #d4d4d4;           /* cor padrão do texto */
+            padding: 15px;
+            border-radius: 8px;
+            font-family: "Fira Code", "Courier New", monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            overflow-x: auto;         /* rolagem horizontal se o código for longo */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        .type {
+            color: #4ec9b0;      /* um azul-esverdeado elegante */
+            font-weight: bold;   /* destaque extra */
+        }
+        .parameter { color: #9cdcfe; }   /* azul claro para parâmetros */
+        .property  { color: #dcdcaa; }   /* amarelinho para atributos */
+
+/* exemplo de destaque de sintaxe simples */
+        .code-block .keyword { color: #569cd6; }   /* azul para palavras-chave */
+        .code-block .string { color: #ce9178; }    /* marrom-avermelhado para strings */
+        .code-block .function { color: #dcdcaa; }  /* amarelo para funções */
+        .code-block .number { color: #c0e9ff}
+        .code-block .comment { color: rgb(121, 116, 116)}
+        .code-block .logic_operator { color: rgb(219, 19, 59)}
+        .exemplo-um {
+          text-align: center;
+        }
+        .img-size {
+          height: 256px;
+          width: 360px;
+        }
+    </style>
+</head>
+<body style="background:#0b0f1e; color:white; font-family:sans-serif;">
+  <h1 style="font-size:30px; text-align:left;">Módulo 10: Introdução à linguagem C</h1>
+    <p>Olá! No módulo anterior, demos um salto fundamental na organização do nosso código ao aprender a criar e utilizar funções. Vimos como elas nos permitem dividir problemas complexos em partes menores, reutilizar código e tornar nossos programas mais legíveis. No entanto, encontramos uma limitação importante: quando passamos variáveis para uma função, o que ocorre é uma cópia dos valores. Isso significa que qualquer alteração feita dentro da função não afeta a variável original. Mas e se quisermos que uma função modifique diretamente uma variável que criamos na main()? E se precisarmos que uma função retorne mais de um valor? Para isso, precisamos ir além da simples cópia de valores. Precisamos aprender a trabalhar com endereços de memória e ponteiros. Este é um dos conceitos mais poderosos (e às vezes intimidadores) da linguagem C, e dominá-lo é o que separa um programador iniciante de um intermediário. Vamos desmistificá-lo juntos.</p>
+    <h2>A Limitação da Passagem por Valor: Quando uma Cópia não Basta</h2>
+      <p>Vamos revisitar rapidamente o exemplo clássico que ilustra a limitação da passagem por valor: uma função para trocar o valor de duas variáveis.</p>
+      <ul>
+    <pre class="code-block"><code>
+      <span class="comment">// Tentativa (frustrada) de trocar valores usando passagem por valor</span>
+      <span class="type">void</span> <span class="function">troca</span>(<span class="type">int</span> x, <span class="type">int</span> y) {
+          <span class="type">int</span> temp = x;
+          x = y;
+          y = temp;
+          <span class="function">printf</span>(<span class="string">"Dentro da função: x=%d, y=%d\n"</span>, x, y); <span class="comment">// Os valores são trocados aqui</span>
+      }
+
+      <span class="type">int</span> <span class="function">main</span>() {
+          <span class="type">int</span> a = 5, b = 10;
+          <span class="function">printf</span>(<span class="string">"Antes da troca: a=%d, b=%d\n"</span>, a, b); <span class="comment">// Saída: 5, 10</span>
+          <span class="function">troca</span>(a,b);  <span class="comment">// Passamos os VALORES de 'a' e 'b' (5, 10)</span>
+          <span class="function">printf</span>(<span class="string">"Depois da troca: a=%d, b=%d\n"</span>, a, b); <span class="comment">// Saída: 5, 10 (Nada mudou!)</span>
+          <span class="keyword">return</span> <span class="number">0</span>;
+      }
+    </code></pre>
+      </ul>
+      <p>Por que a e b não foram alterados? Porque quando chamamos troca(a, b), os valores 5 e 10 são copiados para as variáveis locais x e y da função troca. A função trabalha com essas cópias. A troca acontece perfeitamente dentro do universo da função troca, mas quando ela termina, as cópias x e y são destruídas, e as variáveis originais a e b na main() permanecem intactas. Precisamos de um mecanismo que permita à função troca acessar e modificar o local de memória onde a e b estão guardadas, e não apenas uma cópia dos seus valores. É aí que entram os ponteiros.</p>
+
+    <h2>Ponteiros: Os "Mapas do Tesouro" da Memória</h2>
+      <p>Um ponteiro é, em essência, uma variável como qualquer outra. A diferença crucial é que, enquanto uma variável comum armazena um valor (como o número 5), um ponteiro armazena um endereço de memória. Vamos usar uma analogia: imagine que a memória do computador é uma grande cidade, e cada variável é uma casa. O valor da variável é o que está dentro da casa. O endereço da variável é o "número da casa" na rua.</p>
+      <ul>
+        <li>int a = 5;: É como ter uma casa na "Rua da Memória, nº 1000", e dentro dela está o número 5.</li>
+        <li>Um ponteiro é como um papel onde anotamos o endereço "Rua da Memória, nº 1000". Esse papel não contém o número 5, mas sim a localização de onde o número 5 pode ser encontrado.</li>
+      </ul>
+      <p>Em C, usamos o operador & (e comercial) para obter o endereço de uma variável, e o operador * (asterisco) para declarar um ponteiro e para acessar o valor armazenado no endereço para o qual ele aponta (o que chamamos de "desreferenciar" o ponteiro).</p>
+      <ul>
+    <pre class="code-block"><code>
+      <span class="type">int</span> a = <span class="number">5</span>;  <span class="comment">// Uma variável comum, que armazena o valor 5.</span>
+      <span class="type">int</span> *ponteiro;  <span class="comment">// Declara um ponteiro para um inteiro. ASTERISCO indica que é um ponteiro.</span>
+
+      ponteiro = &a <span class="comment">// // Atribui ao ponteiro o ENDEREÇO de 'a'. Agora, ponteiro "aponta" para 'a'.</span>
+
+      <span class="function">printf</span>(<span class="string">"Valor de a: %d\n"</span>, a); <span class="comment">// Imprime: 5</span>
+      <span class="function">printf</span>(<span class="string">"Endereço de a: %p\n"</span>, &a); <span class="comment">// Imprime: 5Imprime algo como: 0x7ffd42a (o endereço)</span>
+      <span class="function">printf</span>(<span class="string">"Conteúdo do ponteiro: %p\n"</span>, ponteiro); <span class="comment">// Imprime o MESMO endereço de 'a'</span>
+      <span class="function">printf</span>(<span class="string">"Valor apontado por ponteiro: %d\n"</span>, *ponteiro); <span class="comment">// Imprime: 5 (o valor DE 'a')</span>
+      <span class="comment">// O ASTERISCO aqui é usado para ACESSAR o valor no endereço armazenado.</span> 
+
+      *ponteiro = <span class="number">10</span>  <span class="comment">// Altera o valor NO ENDEREÇO apontado por 'ponteiro'. Como ele aponta para 'a', altera o valor de 'a'.</span> 
+      <span class="function">printf</span>(<span class="string">"Novo valor de a: %d\n"</span>, a); <span class="comment">// Imprime: 10</span>
+    </code></pre>
+      </ul>
+      <p>Esta é a ideia fundamental: com um ponteiro, podemos não apenas saber onde uma variável vive, mas também interagir com ela à distância.</p>
+    
+    <h2>Passagem por Referência: Modificando Variáveis à Distância</h2>
+      <p>Agora, vamos consertar nossa função troca. Em vez de passar os valores de a e b, vamos passar os seus endereços. Dizemos que estamos passando os parâmetros por referência.</p>
+
+      <ul>
+    <pre class="code-block"><code>
+      <span class="comment">// Função correta para trocar valores usando passagem por REFERÊNCIA (ponteiros)</span>
+      <span class="type">void</span> <span class="function">troca</span>(<span class="type">int</span> *x, <span class="type">int</span> *y) { <span class="comment">// Recebe dois PONTEIROS para inteiros</span>
+          <span class="type">int</span> temp = *x;  <span class="comment">// temp recebe o valor APONTADO por x (o valor de 'a')</span>
+          x* = y*;  <span class="comment">// O valor APONTADO por x (a) recebe o valor APONTADO por y (b)</span>
+          y* = temp;  <span class="comment">// O valor APONTADO por y (b) recebe o valor de temp</span>
+      }
+
+      <span class="type">int</span> <span class="function">main</span>() {
+          <span class="type">int</span> a = 5, b = 10;
+          <span class="function">printf</span>(<span class="string">"Antes da troca: a=%d, b=%d\n"</span>, a, b); <span class="comment">// Saída: 5, 10</span>
+          <span class="function">troca</span>(&a,&b);  <span class="comment">// Passamos os ENDEREÇOS de 'a' e 'b' usando o operador &</span>
+          <span class="function">printf</span>(<span class="string">"Depois da troca: a=%d, b=%d\n"</span>, a, b); <span class="comment">// Saída: 10, 5 (Agora funciona!)</span>
+          <span class="keyword">return</span> <span class="number">0</span>;
+      }
+    </code></pre>
+      </ul>
+
+      <p>Vamos dissecar a mágica:</p>
+      <ul>
+        <li>troca(&a, &b): A main() envia os endereços de a e b para a função.</li>
+        <li>void troca(int *x, int *y): A função recebe esses endereços e os armazena nos ponteiros x e y. Agora, x contém o endereço de a e y contém o endereço de b.</li>
+        <li>int temp = *x;: Lê-se "temp recebe o valor contido no endereço armazenado em x". Isso é equivalente a temp = a;.</li>
+        <li>*x = *y;: "O valor no endereço x recebe o valor no endereço y". Equivale a a = b;.</li>
+        <li>*y = temp;: "O valor no endereço y recebe o valor de temp". Equivale a b = temp;.</li>
+      </ul>
+      <p>Dessa forma, a função troca opera diretamente sobre as variáveis a e b da main(), mesmo estando em um escopo diferente.</p>
+    
+    <h2>Aplicação Prática: Funções que Retornam Múltiplos Valores</h2>
+      <p>A passagem por referência é a solução para um problema comum: como fazer uma função retornar mais de um valor? Um exemplo clássico é uma função para calcular as raízes de uma equação do segundo grau, que precisa retornar dois valores: x1 e x2.</p>
+      <ul>
+    <pre class="code-block"><code>
+      #<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span>
+      #<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span>
+
+      <span class="comment">// A função não retorna valor (void), mas modifica x1 e x2 através de ponteiros.</span>
+      <span class="type">void</span> <span class="function">bhaskara</span>(<span class="type">float</span> a, <span class="type">float</span> b, <span class="type">float</span> c, <span class="type">float</span> *x1, <span class="type">float</span> *x2) {
+          <span class="type">float</span> delta = b*b - 4*a*c;
+          *x1 = (-b + <span class="function">sqrt</span>(delta)) / (<span class="number">2</span>*a);
+          *x2 = (-b - <span class="function">sqrt</span>(delta)) / (<span class="number">2</span>*a);
+      }
+
+      <span class="type">int</span> <span class="function">main</span>() {
+          <span class="type">float</span> coef_a, coef_b, coef_c, raiz1, raiz2;
+          <span class="function">printf</span>(<span class="string">"Digite os coeficientes 'a', 'b' e 'c': "</span>);
+          <span class="function">scanf</span>(<span class="string">"%f %f %f"</span>, &coef_a, &coef_b, &coef_c);
+      
+          <span class="comment">// Passa os endereços de raiz1 e raiz2 para que bhaskara possa preenchê-los.</span>
+          <span class="function">bhaskara</span>(coef_a, coef_b, coef_c, &raiz1, &raiz2);
+
+          <span class="function">printf</span>(<span class="string">"As raízes são: x1 = %.2f e x2 = %.2f\n"</span>, raiz1, raiz2);
+          <span class="keyword">return</span> <span class="number">0</span>;
+      }
+    </code></pre>
+      </ul>
+      <p>Neste padrão, os parâmetros a, b e c são passados por valor (são apenas entradas), enquanto x1 e x2 são passados por referência para servirem como saídas da função.</p>
+    <h2>Ponteiros e Vetores: Uma Relação Íntima</h2>
+      <p>Há uma conexão profunda e natural entre ponteiros e vetores. Em C, o nome de um vetor é, na verdade, um ponteiro constante para o primeiro elemento do vetor.</p>
+      <ul>
+    <pre class="code-block"><code>
+      <span class="type">int</span> vetor[<span class="number">5</span>] = {<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>, <span class="number">50</span>};
+      <span class="function">printf</span>(<span class="string">"Endereço do vetor: %p\n"</span>, vetor);
+      <span class="function">printf</span>(<span class="string">"Endereço do vetor[0]: %p\n"</span>, &vetor[0]);  <span class="comment">// Será o MESMO valor da linha acima.</span>
+    </code></pre>
+    </ul>
+
+      <p>Isso significa que quando passamos um vetor para uma função, estamos automaticamente passando uma referência (o endereço do primeiro elemento). Por isso, funções que modificam vetores o fazem diretamente no original.</p>
+      <ul>
+    <pre class="code-block"><code>
+      <span class="type">void</span> <span class="function">incrementa_vetor</span>(<span class="type">int</span> *v, <span class="type">int</span> tamanho) { <span class="comment">// ou int v[]</span>
+          <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; tamanho; i++) {
+              v[i] = v[i] + <span class="number">1</span>;  <span class="comment">// Modifica o vetor original;</span>
+          }
+      }
+
+      <span class="type">int</span> <span class="function">main</span>() {
+          <span class="type">int</span> meuvetor[<span class="number">3</span>] = {<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>};
+          <span class="function">incrementa_vetor</span>(meuvetor, <span class="number">3</span>);  <span class="comment">// Passa 'meuvetor' (que é um endereço)</span>
+          <span class="comment">// meuvetor agora contém {2, 3, 4}</span>
+      }
+    </code></pre>
+      </ul>
+      
+      <p>No próximo módulo, exploraremos como passar matrizes para funções, um tema que builds upon este conhecimento fundamental de ponteiros. Por hoje, o mais importante é praticar a mentalidade do ponteiro. Desenhe diagramas de memória. Trace a execução de programas simples com ponteiros no papel. Quando você internalizar que um ponteiro é um "guia" para um local na memória, e que *ponteiro é a forma de visitar esse local, um novo mundo de possibilidades se abrirá em sua programação.
+      <br><br>Até a próxima!</p>
+  <a href="bemvindos.php" style="color:lightblue;">Voltar</a>
+</body>
+</html>

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Módulo 6 - Estruturas de Repetição Com For, Contadores e Acumuladores</title>
+  <style>
+        code {
+            font-size: 20px;
+        }
+        span {
+            font-size: 20px;
+        }
+        p {
+          font-size: 20px;
+          text-align: justify;
+        }
+
+        li {
+          font-size: 20px;
+          text-align: justify;
+        }
+       /* Container do quiz */
+        .quiz-container {
+            background-color: #1e1e1e;
+            border-radius: 15px;
+            width: 80%;  /* Aumentei o tamanho da largura */
+            max-width: 900px;  /* Aumentei o max-width */
+            padding: 40px;  /* Aumentei o padding interno */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            transition: transform 0.5s ease;
+        }
+
+        /* Título do Quiz */
+        h1 {
+            text-align: center;
+            color: #00b0ff;
+            font-size: 50px;
+            font-weight: bold;
+            margin-bottom: 40px;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Estilos das perguntas */
+        .question {
+            font-size: 28px;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+
+        /* Estilos das opções de resposta */
+        .options button {
+            background-color: #00b0ff;
+            border: none;
+            padding: 15px 30px;
+            margin: 15px;
+            font-size: 22px;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .options button:hover {
+            background-color: #0088cc;
+            transform: translateY(-5px);
+        }
+
+        /* Feedback sobre a resposta */
+        .feedback {
+            text-align: center;
+            font-size: 24px;
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .correct {
+            color: #32cd32; /* Verde para respostas corretas */
+            background-color: rgba(50, 205, 50, 0.1);
+        }
+
+        .wrong {
+            color: #ff6347; /* Vermelho para respostas erradas */
+            background-color: rgba(255, 99, 71, 0.1);
+        }
+
+        /* Decoração com elementos de programação */
+        .programming-icon {
+            font-size: 24px;
+            color: #00b0ff;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .programming-icon i {
+            margin-right: 10px;
+        }
+
+        /* Animações de feedback */
+        .feedback {
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .code-block {
+            background-color: #1e1e1e; /* fundo escuro estilo VS Code */
+            color: #d4d4d4;           /* cor padrão do texto */
+            padding: 15px;
+            border-radius: 8px;
+            font-family: "Fira Code", "Courier New", monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            overflow-x: auto;         /* rolagem horizontal se o código for longo */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        .type {
+            color: #4ec9b0;      /* um azul-esverdeado elegante */
+            font-weight: bold;   /* destaque extra */
+        }
+        .parameter { color: #9cdcfe; }   /* azul claro para parâmetros */
+        .property  { color: #dcdcaa; }   /* amarelinho para atributos */
+
+/* exemplo de destaque de sintaxe simples */
+        .code-block .keyword { color: #569cd6; }   /* azul para palavras-chave */
+        .code-block .string { color: #ce9178; }    /* marrom-avermelhado para strings */
+        .code-block .function { color: #dcdcaa; }  /* amarelo para funções */
+        .code-block .number { color: #c0e9ff}
+        .code-block .comment { color: rgb(121, 116, 116)}
+        .code-block .logic_operator { color: rgb(219, 19, 59)}
+        .exemplo-um {
+          text-align: center;
+        }
+        .img-size {
+          height: 256px;
+          width: 360px;
+        }
+</style>
+</head>
+<body style="background:#0b0f1e; color:white; font-family:sans-serif;">
+  <h1 style="font-size:30px; text-align:left;">Módulo 6: A Arte da Iteração: Domando Repetições com for, Contadores e Acumuladores</h1>
+    <p>Olá, programadora, programador! Espero que esteja encontrando prazer nesta jornada de descobrir como dar instruções precisas a uma máquina. Nosso último módulo foi um marco importante: saímos do mundo das decisões sequenciais e entramos no território dinâmico das repetições. Com o while e do-while, você aprendeu a criar programas que podem insistir em uma tarefa até que uma condição seja satisfeita.
+    <br>Hoje, vamos refinar ainda mais esse poder. Imagine que a repetição é um martelo. O while é um martelo versátil, útil para muitas situações. O for, que apresentaremos hoje, é como um martelo de precisão, desenhado para situações onde você sabe exatamente quantas batidas precisa dar antes de começar. E, para usar essas ferramentas com maestria, precisamos entender os "assistentes" que trabalham dentro dos loops: os contadores, acumuladores e sinalizadores.</p>
+    <h2>Revisitando a Repetição: Uma Questão de Organização</h2>
+      <p>Você se lembra da estrutura do while? Sempre há uma certa coreografia:</p>
+      <ol>
+        <li>Inicialização de uma variável de controle (antes do loop).</li>
+        <li>Verificação de uma condição (no início do loop).</li>
+        <li>Execução do bloco de código.</li>
+        <li>Atualização da variável de controle (dentro do bloco).</li>
+      </ol>
+      <p>O desafio é que essa coreografia está espalhada pelo seu código. E se você se esquecer do passo 4 (a atualização)? O resultado é um loop infinito, onde a condição nunca se torna falsa. O comando for foi criado para resolver exatamente isso: organizar toda a lógica de controle do loop em um único lugar, tornando-o mais legível e menos propenso a erros. Pense no for como um while que passou por uma sessão de organização. Sua sintaxe é um concentrado de clareza:</p>
+      <pre class="code-block"><code>
+        <span class="keyword">for</span> (inicialização; condição; incremento){
+            <span class="comment">// Bloco de código a ser repetido</span>
+        }
+      </code></pre>
+      <p>Vamos traduzir um exemplo simples do while para o for. O objetivo: imprimir os números de 1 a 10.</p>
+      <h4>Com While:</h4>
+      <pre class="code-block"><code>
+        <span class="type">int</span> i = <span class="number">1</span>;        <span class="comment">// inicialização (fora do loop)</span>
+            <span class="keyword">while</span> (i &lt;= <span class="number">10</span>){<span class="comment"> Condição</span>
+                <span class="function">printf</span>(<span class="string">"%d\n"</span>, i);
+                i++;
+            }
+      </code></pre>
+      <h4>Com for</h4>
+      <pre class="code-block"><code>
+        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;=<span class="number">10</span>; i++){
+          <span class="function">printf</span>(<span class="string">"%d\n"</span>, i);
+        }
+      </code></pre>
+      <p>Percebe a elegância? A linha do for nos conta uma história completa: "Para uma variável i que começa em 1, e enquanto i for menor ou igual a 10, execute este bloco e, após cada execução, incremente i." Toda a lógica de controle está visível de uma vez. Isso não é apenas mais bonito; é mais seguro. A chance de você esquecer o i++ é praticamente zero, porque ele tem seu lugar dedicado.</p>
+    
+    <h2>Os Personagens Principais dos Loops: Contadores e Acumuladores</h2>
+      <p>Agora que temos uma ferramenta mais organizada, vamos falar dos padrões clássicos que você encontrará em quase todo loop. São técnicas tão fundamentais que recebem nomes especiais.</p>
+      <ol>
+        <li><h3>O Contador (cont++)</h3></li>
+        <p>O contador é a variável mais simples e comum em um loop. Sua missão é responder à pergunta: "Quantas vezes algo aconteceu?".</p>
+        <ul>
+          <li>Características: É inicializada com zero (0) e incrementada de 1 em 1 (contador++) cada vez que o evento de interesse ocorre.</li>
+          <li>Analogia: É como marcar risquinhos numa folha de papel a cada vez que um evento acontece.</li>
+        </ul>
+        <p>O exemplo das médias da turma, presente no seu material, é perfeito. Queremos contar quantos alunos, em uma turma de 20, foram aprovados (média >= 6).</p>
+        <pre class="code-block"><code>
+          <span class="type">int</span> aprovados = <span class="number">0</span>;  <span class="comment">Inicializa o CONTADOR</span>
+
+          <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt;=<span class="number">20</span>; i++){
+              <span class="type">float</span> media;
+              <span class="function">printf</span>(<span class="string">"Digite a média do aluno %d: "</span>, i+1);
+              <span class="function">scanf</span>(<span class="string">"%f"</span>, &media);
+
+              <span class="keyword">if</span>(media >= <span class="number">6.0</span>) {
+                  aprovados++   <span class="comment">// Incrementa o CONTADOR somente se a condição for verdadeira</span>
+              }
+          }
+
+          <span class="function">printf</span>(<span class="string">"Total de aprovados: %d\n"</span>, aprovados);
+        </code></pre>
+        <p>A variável aprovados é nosso contador. Ela só aumenta quando encontramos um aluno aprovado. O i no for também é um contador, mas sua função é controlar o número de iterações (20 alunos). Já o aprovados conta um subconjunto dentro dessas iterações.</p>
+        <li><h3>O Acumulador (soma += valor)</h3></li>
+        <p>Enquanto o contador soma de 1 em 1, o acumulador soma valores variáveis. Sua missão é responder: "Qual é o total?".</p>
+        <ul>
+          <li>Características: Também é inicializada com zero (0), mas é incrementada por um valor variável (soma = soma + valor; ou soma += valor).</li>
+          <li>Analogia: É como ir jogando moedas de valores diferentes em um cofrinho. A cada moeda, o total acumulado aumenta.</li>
+        </ul>
+        <p>O exemplo das despesas do mês ilustra isso. Somamos valores de despesas até que o usuário sinalize o fim com um valor negativo.</p>
+        <pre class="code-block"><code>
+          <span class="type">float</span> valor, total_despesas = 0.0;    <span class="comment">Inicializa o CONTADOR</span>
+          <span class="function">printf</span>(<span class="string">"Digite as despesas (valor negativo para sair):\n"</span>);
+
+          <span class="keyword">do</span> {   <span class="comment">// Acumula o valor lido na iteração anterior</span>
+              total_despesas += valor;
+              <span class="function">printf</span>(<span class="string">"Digite o valor da despesa: "</span>);
+              <span class="function">scanf</span>(<span class="string">"%f"</span>, &valor);
+              } <span class="keyword">while</span> (valor >= 0);    <span class="comment">// O loop para quando um valor negativo for digitado</span>
+
+              <span class="function">printf</span>(<span class="string">"Digite o valor da despesa: R$ %.2f\n"</span>, total_despesas);
+        </code></pre>
+        <p>Note a lógica sutil aqui: o valor é acumulado antes de ler a nova entrada. Isso é necessário para não incluirmos o valor negativo de saída no total. É um detalhe que mostra a importância de entender o fluxo do seu algoritmo.</p>
+
+        <li><h3>O Sinalizador (Flag) (flag = 1)</h3></li>
+        <p>O sinalizador, ou flag, não se preocupa com "quantas vezes", mas sim com "se aconteceu pelo menos uma vez". É um interruptor lógico.</p>
+        <ul>
+          <li>Características: É inicializada com um valor que significa "falso" ou "não aconteceu" (geralmente 0). Se o evento ocorrer, ela é "ativada" (mudada para 1).</li>
+          <li>Analogia: É como um alarme de incêndio. Ele está desligado (0). Se qualquer sensor detectar fumaça (o evento), o alarme soa (1), independente de quantos sensores foram acionados.</li>
+        </ul>
+        <p>O clássico exemplo é verificar se um número é primo. Um número é primo se for divisível apenas por 1 e por ele mesmo. Nossa estratégia é assumir que é primo (eh_primo = 1) e procurar por qualquer divisor que prove o contrário.</p>
+        <pre class="code-block"><code>
+          <span class="type">int</span> numero, eh_primo = 1;    <span class="comment">Inicializa a Flag como "verdadeiro" (é primo)</span>
+          
+          <span class="function">printf</span>(<span class="string">"Digite um número inteiro positivo: "</span>);
+          <span class="function">scanf</span>(<span class="string">"%d"</span>, &numero);
+
+          <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">2</span>; i &lt; numero; i++) { <span class="comment">// Começa a testar a partir a partir de 2</span>
+              <span class="keyword">if</span> (numero % i == <span class="number">0</span>) {
+                  <span class="comment">// Encontrou um divisor! Isso prova que o número NÃO é primo.</span>
+                  eh_primo = <span class="number">0</span>;   <span class="comment">// "Desliga" a flag, sinalizando que não é primo.</span>
+                  <span class="keyword">break</span>; <span class="comment">// Interrompe o loop precocemente, pois já temos a resposta.</span>
+              }
+          }
+
+          <span class="keyword">if</span> (eh_primo == <span class="number">1</span> <span class="logic_operator">&&</span> numero > <span class="number">1</span>) {   <span class="comment">// Importante: 1 não é considerado primo</span>
+              <span class="function">printf</span>(<span class="string">"%d é um número primo.\n"</span>, numero);
+          } <span class="keyword">else</span> {
+            <span class="function">printf</span>(<span class="string">"%d não é um número primo.\n"</span>, numero);
+          }
+        </code></pre>
+      </ol>
+      
+    <h2>Quando usar for ou while? Uma Questão de Intenção</h2>
+      <p>Com duas ferramentas disponíveis, como escolher?</p>
+      <ul>
+        <li>Use for: Quando o número de iterações é conhecido antes do loop começar. É ideal para "contagens": percorrer um array, repetir uma ação N vezes, processar uma quantidade fixa de elementos.</li>
+        <li>Use while (ou do-while): Quando o número de iterações é desconhecido e depende de uma condição que só pode ser verificada durante a execução. É ideal para "eventos": ler entradas do usuário até que ele digite "sair", processar dados até encontrar um marcador de fim, esperar por uma condição externa.</li>
+      </ul>
+      <p>Em outras palavras, o for é para loops contados; o while é para loops condicionais.</p>
+
+    <h2>Preparando o Terreno: Uma Palavra sobre Boas Práticas</h2>
+      <p>Conforme seus programas ficam mais complexos, a organização se torna crucial. Os documentos de boas práticas destacam pontos essenciais:</p>
+      <ul>
+        <li>Indentação: Manter o código alinhado não é frescura. É uma ferramenta visual que permite que você e outras pessoas entendam a estrutura do programa num piscar de olhos. O bloco de código dentro de um for deve estar indentado em relação à linha do for.</li>
+        <li>Nomes Significativos: Em vez de x ou a, use contador_alunos, soma_despesas, eh_numero_primo. O código se torna uma documentação de si mesmo.</li>
+        <li>Comentários: Use para explicar o "porquê" de uma decisão complexa, não o "o quê" (o código já mostra o "o quê").</li>
+      </ul>
+
+    <h2>Conclusão</h2>
+    <p>Na próxima aula, levaremos esses conceitos a um novo patamar, explorando como armazenar múltiplos valores do mesmo tipo em uma única estrutura de dados: os vetores (arrays). Será a primeira vez que lidaremos com coleções de dados, um passo fundamental para programas verdadeiramente úteis. Por hoje, o desafio é internalizar esses padrões. Tente reescrever alguns dos seus programas anteriores usando for. Pense em situações onde um contador, um acumulador ou uma flag seriam úteis. A repetição é o coração da automação, e dominá-la é liberar um poder imenso em suas mãos.
+    <br><br>Até a próxima!</p>
+
+  <a href="bemvindos.php" style="color:lightblue;">Voltar</a>
+</body>
+</html>

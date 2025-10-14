@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Módulo 5 - Estruturas de Repetição: While e Do-While</title>
+  <style>
+        code {
+            font-size: 20px;
+        }
+        span {
+            font-size: 20px;
+        }
+        p {
+          font-size: 20px;
+          text-align: justify;
+        }
+
+        li {
+          font-size: 20px;
+          text-align: justify;
+        }
+       /* Container do quiz */
+        .quiz-container {
+            background-color: #1e1e1e;
+            border-radius: 15px;
+            width: 80%;  /* Aumentei o tamanho da largura */
+            max-width: 900px;  /* Aumentei o max-width */
+            padding: 40px;  /* Aumentei o padding interno */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            transition: transform 0.5s ease;
+        }
+
+        /* Título do Quiz */
+        h1 {
+            text-align: center;
+            color: #00b0ff;
+            font-size: 50px;
+            font-weight: bold;
+            margin-bottom: 40px;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Estilos das perguntas */
+        .question {
+            font-size: 28px;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+
+        /* Estilos das opções de resposta */
+        .options button {
+            background-color: #00b0ff;
+            border: none;
+            padding: 15px 30px;
+            margin: 15px;
+            font-size: 22px;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .options button:hover {
+            background-color: #0088cc;
+            transform: translateY(-5px);
+        }
+
+        /* Feedback sobre a resposta */
+        .feedback {
+            text-align: center;
+            font-size: 24px;
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .correct {
+            color: #32cd32; /* Verde para respostas corretas */
+            background-color: rgba(50, 205, 50, 0.1);
+        }
+
+        .wrong {
+            color: #ff6347; /* Vermelho para respostas erradas */
+            background-color: rgba(255, 99, 71, 0.1);
+        }
+
+        /* Decoração com elementos de programação */
+        .programming-icon {
+            font-size: 24px;
+            color: #00b0ff;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .programming-icon i {
+            margin-right: 10px;
+        }
+
+        /* Animações de feedback */
+        .feedback {
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .code-block {
+            background-color: #1e1e1e; /* fundo escuro estilo VS Code */
+            color: #d4d4d4;           /* cor padrão do texto */
+            padding: 15px;
+            border-radius: 8px;
+            font-family: "Fira Code", "Courier New", monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            overflow-x: auto;         /* rolagem horizontal se o código for longo */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        .type {
+            color: #4ec9b0;      /* um azul-esverdeado elegante */
+            font-weight: bold;   /* destaque extra */
+        }
+        .parameter { color: #9cdcfe; }   /* azul claro para parâmetros */
+        .property  { color: #dcdcaa; }   /* amarelinho para atributos */
+
+/* exemplo de destaque de sintaxe simples */
+        .code-block .keyword { color: #569cd6; }   /* azul para palavras-chave */
+        .code-block .string { color: #ce9178; }    /* marrom-avermelhado para strings */
+        .code-block .function { color: #dcdcaa; }  /* amarelo para funções */
+        .code-block .number { color: #c0e9ff}
+        .code-block .comment { color: rgb(121, 116, 116)}
+        .exemplo-um {
+          text-align: center;
+        }
+        .img-size {
+          height: 256px;
+          width: 360px;
+        }
+</style>
+</head>
+<body style="background:#0b0f1e; color:white; font-family:sans-serif;">
+  <h1 style="font-size:30px; text-align:left;">Módulo 5: Estruturas de Repetição: While e Do-While</h1>
+    <h2>Introdução</h2>
+      <p>Até agora, nossos programas sempre seguiram um fluxo linear: começavam na função main, executavam linha por linha e terminavam. Já conseguimos tomar decisões com if e switch, o que deu aos programas a capacidade de escolher caminhos. Mas ainda existe uma limitação: se quisermos repetir uma mesma instrução várias vezes, precisamos escrever o comando várias vezes. Imagine que você queira imprimir os números de 1 a 100. Sem laços de repetição, teria que escrever cem linhas de printf. Isso não faz sentido. É aqui que entram as estruturas de repetição (também chamadas de laços ou loops). Com elas, podemos dizer ao computador:
+      <br><br>“Repita este bloco de instruções enquanto uma condição for verdadeira.”
+      <br><br>Isso torna o código mais curto, organizado e poderoso.</p>
+
+    <h2>O conceito de iteração</h2>
+        <p>Iterar significa repetir. Em algoritmos, a iteração é usada quando precisamos executar um mesmo conjunto de instruções várias vezes, seja um número determinado de vezes, seja até que uma condição seja atendida.
+        <br>Exemplos do cotidiano:</p>
+        <ul>
+          <li>Contar moedas até terminar o pote.</li>
+          <li>Perguntar a senha até que o usuário digite a correta.</li>
+          <li>Somar notas até que todas as provas tenham sido corrigidas.</li>
+        </ul>
+        <p>O computador segue a mesma lógica: executa um bloco de código repetidamente até que uma condição de parada seja atingida.</p>
+
+    <h2>O laço while</h2>
+        <p>O laço while é a forma mais simples de repetição em C. Sua sintaxe é:</p>
+        <pre class="code-block"><code>
+          <span class="keyword">While</span> (condição)
+          {
+            <span class="comment">// comandos a serem repetidos</span>
+          }
+        </code></pre>
+        <p>O funcionamento é o seguinte:</p>
+        <ol>
+          <li>O programa avalia a condicao.</li>
+          <li>Se for verdadeira, executa os comandos dentro do bloco.</li>
+          <li>Ao terminar, volta ao passo 1.</li>
+          <li>Quando a condicao se torna falsa, o laço é encerrado.</li>
+        </ol>
+        <p>Ou seja: o while testa antes de executar.</p>
+        <h3>Exemplo: imprimir números de 0 a 9</h3>
+        <pre class="code-block"><code>
+          #<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span>
+
+          <span class="type">int</span> <span class="function">Main</span>()
+          {
+            <span class="type">int</span> i = <span class="number">0</span>;
+
+            <span class="keyword">while</span> (i &lt; <span class="number">10</span>)
+            {
+              <span class="function">printf</span>(<span class="string">"%d\n"</span>, i);
+              i++;
+            }
+            <span class="keyword">return</span> <span class="number">0</span>;
+          }
+        </code></pre>
+        <p>Explicando:</p>
+        <ul>
+          <li>Começamos com i = 0.</li>
+          <li>A condição é i &lt; 10. Enquanto for verdadeira, o bloco será repetido.</li>
+          <li>A cada repetição, i é incrementado em 1.</li>
+          <li>Quando i chega a 10, a condição se torna falsa e o laço termina.</li>
+        </ul>
+    <h2>Cuidados com o while</h2>
+        <p>Existem dois cuidados essenciais ao usar while:</p>
+        <ol>
+          <li><h3>Inicialização da variável de controle: se esquecermos de inicializar, o comportamento pode ser imprevisível.</h3></li>
+        </ol>
+        <pre class="code-block"><code>
+            <span class="type">int</span> i;
+            <span class="keyword">while</span> (i &lt; <span class="number">10</span>) <span class="comment">// valor de i indefinido!!</span>
+              <span class="function">printf</span>(<span class="string">"%d\n"</span>, i);
+        </code></pre>
+        <ol>
+          <li><h3>Atualização da variável de controle: se a condição nunca mudar, o laço será infinito.</h3></li>
+        </ol>
+        <pre class="code-block"><code>
+            <span class="type">int</span> i = 0;
+            <span class="keyword">while</span> (i &lt; <span class="number">10</span>) <span class="comment">// valor de i indefinido!!</span>
+            {
+              <span class="function">printf</span>(<span class="string">"%d\n"</span>, i);
+              <span class="comment">// esqueci de incrementar o i!</span>
+            }
+        </code></pre>
+        <p>Esses são erros comuns, mas com prática fica fácil evitá-los.</p>
+
+    <h2>Exemplo prático: Fatorial</h2>
+        <p>O cálculo do fatorial de um número é um ótimo exemplo de repetição. O fatorial de n (escrito como n!) é o produto de todos os inteiros positivos até n.
+        <br>Exemplo:</p>
+        <ul>
+          <li>5! = 5 × 4 × 3 × 2 × 1 = 120</li>
+        </ul>
+        <p>Podemos calcular isso com while:</p>
+        <pre class="code-block"><code>
+            #<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span>
+
+            <span class="type">int</span> <span class="function">Main</span>()
+            {
+              int n, i = <span class="number">1</span>, fatorial = <span class="number">1</span>;
+
+              <span class="function">printf</span>(<span class="string">"Digite um número inteiro: "</span>);
+              <span class="function">scanf</span>(<span class="string">"%d"</span>, &n);
+
+              <span class="keyword">while</span> (i &lt;= n)
+              {
+                fatorial = fatorial * i;
+                i++;
+              }
+              <span class="function">printf</span>(<span class="string">"o fatorial de %d é %d\n"</span>, n, fatorial);
+
+              <span class="keyword">return</span> <span class="number">0</span>;
+            }
+        </code></pre>
+    <h2>O laço do...while</h2>
+        <p>O do...while é parecido com o while, mas com uma diferença importante: ele executa o bloco primeiro e só depois testa a condição.</p>
+        <pre class="code-block"><code>
+          <span class="keyword">do</span>
+          {
+            <span class="comment">// comandos</span>
+          } <span class="keyword">while</span> (condicao);
+        </code></pre>
+        <p>Perceba que aqui o ponto e vírgula aparece no final do while.</p>
+        <h3>Diferença fundamental</h3>
+        <ul>
+          <li>while: testa antes → pode não executar nenhuma vez.</li>
+          <li>do...while: executa primeiro → garante que o bloco será executado pelo menos uma vez.</li>
+        </ul>
+        <h3>Exemplo: ler números até digitar 0</h3>
+          <pre class="code-block"><code>
+            #<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span>
+
+            <span class="type">int</span> <span class="function">Main</span>()
+            {
+              int n, i = numero;
+
+              <span class="keyword">do</span>
+              {
+                <span class="function">printf</span>(<span class="string">"Digite um número (0 para sair): "</span>);
+                <span class="function">scanf</span>(<span class="string">"%d"</span>, &numero);
+
+              } <span class="keyword">while</span> (numero != 0);
+
+              <span class="keyword">return</span> <span class="number">0</span>;
+            }            
+        </code></pre>
+        <p>Aqui, mesmo que o usuário digite 0 logo de cara, o programa pelo menos pediu uma vez o número.</p>
+    <h2>Comparando while e do...while</h2>
+        <p>Imagine que o usuário só possa digitar valores entre 0 e 100.</p>
+        <ul>
+          <li>Com while, você precisa inicializar a variável e só depois pedir ao usuário, testando antes.</li>
+          <li>Com do...while, você simplesmente pede o valor e repete até ser válido.</li>
+        </ul>
+        <p>Por isso, do...while é ótimo para validação de dados.</p>
+
+    <h2>Conclusão</h2>
+    <p>Neste módulo, aprendemos a repetir blocos de instruções com while e do...while. Entendemos que a diferença entre eles está no momento em que a condição é testada: antes (while) ou depois (do...while). Vimos exemplos práticos como imprimir sequências, calcular fatoriais, validar dados e ler números até que uma condição de parada seja atingida. Com isso, nossos programas ganharam muito mais poder: agora podemos automatizar tarefas repetitivas sem precisar escrever código duplicado. No próximo módulo, vamos conhecer outra forma de repetição: o laço for, que é especialmente útil quando já sabemos exatamente quantas vezes o bloco deve ser executado.</p>
+
+
+  <a href="bemvindos.php" style="color:lightblue;">Voltar</a>
+</body>
+</html>

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Módulo 1 - Primeiros Passos em C</title>
+<style>
+        code {
+            font-size: 20px;
+        }
+        span {
+            font-size: 20px;
+        }
+        p {
+          font-size: 20px;
+          text-align: justify;
+        }
+
+        li {
+          font-size: 20px;
+          text-align: justify;
+        }
+       /* Container do quiz */
+        .quiz-container {
+            background-color: #1e1e1e;
+            border-radius: 15px;
+            width: 80%;  /* Aumentei o tamanho da largura */
+            max-width: 900px;  /* Aumentei o max-width */
+            padding: 40px;  /* Aumentei o padding interno */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            transition: transform 0.5s ease;
+        }
+
+        /* Título do Quiz */
+        h1 {
+            text-align: center;
+            color: #00b0ff;
+            font-size: 50px;
+            font-weight: bold;
+            margin-bottom: 40px;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Estilos das perguntas */
+        .question {
+            font-size: 28px;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+
+        /* Estilos das opções de resposta */
+        .options button {
+            background-color: #00b0ff;
+            border: none;
+            padding: 15px 30px;
+            margin: 15px;
+            font-size: 22px;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .options button:hover {
+            background-color: #0088cc;
+            transform: translateY(-5px);
+        }
+
+        /* Feedback sobre a resposta */
+        .feedback {
+            text-align: center;
+            font-size: 24px;
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .correct {
+            color: #32cd32; /* Verde para respostas corretas */
+            background-color: rgba(50, 205, 50, 0.1);
+        }
+
+        .wrong {
+            color: #ff6347; /* Vermelho para respostas erradas */
+            background-color: rgba(255, 99, 71, 0.1);
+        }
+
+        /* Decoração com elementos de programação */
+        .programming-icon {
+            font-size: 24px;
+            color: #00b0ff;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .programming-icon i {
+            margin-right: 10px;
+        }
+
+        /* Animações de feedback */
+        .feedback {
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .code-block {
+            background-color: #1e1e1e; /* fundo escuro estilo VS Code */
+            color: #d4d4d4;           /* cor padrão do texto */
+            padding: 15px;
+            border-radius: 8px;
+            font-family: "Fira Code", "Courier New", monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            overflow-x: auto;         /* rolagem horizontal se o código for longo */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        .type {
+            color: #4ec9b0;      /* um azul-esverdeado elegante */
+            font-weight: bold;   /* destaque extra */
+        }
+        .parameter { color: #9cdcfe; }   /* azul claro para parâmetros */
+        .property  { color: #dcdcaa; }   /* amarelinho para atributos */
+
+/* exemplo de destaque de sintaxe simples */
+        .code-block .keyword { color: #569cd6; }   /* azul para palavras-chave */
+        .code-block .string { color: #ce9178; }    /* marrom-avermelhado para strings */
+        .code-block .function { color: #dcdcaa; }  /* amarelo para funções */
+        .code-block .number { color: #c0e9ff}
+</style>
+</head>
+
+<body style="background:#0b0f1e; color:white; font-family:sans-serif;">
+
+<h1 style="font-size:30px; text-align:left;">
+  Módulo 1 - Primeiros Passos em Programação
+</h1>
+
+  <h2>O Introdução</h2>
+    <p>Quando falamos em programação, muita gente imagina telas pretas cheias de códigos misteriosos ou pessoas digitando rapidamente em frente a vários monitores. Essa é uma visão comum, reforçada por filmes e séries, mas a essência da programação é muito mais simples e, ao mesmo tempo, muito mais poderosa. Programar nada mais é do que ensinar um computador a executar uma sequência de instruções para resolver um problema. Um detalhe importante: o computador, apesar de parecer “inteligente”, não entende absolutamente nada por conta própria. Ele não adivinha intenções, não improvisa, não interpreta entrelinhas. Se uma instrução não estiver clara, ele simplesmente não consegue executar. Por isso, aprender a programar exige que sejamos claros, lógicos e organizados. É quase como aprender uma nova forma de se comunicar — uma comunicação onde não pode haver mal-entendidos.</p>
+
+  <h2>O Que São Algoritmos?</h2>
+    <p>Para compreender a programação, precisamos primeiro entender o conceito de algoritmo. Um algoritmo é simplesmente uma sequência de passos bem definidos para alcançar um objetivo. Esse objetivo pode ser qualquer coisa: desde fritar um ovo até calcular a raiz quadrada de um número. Pense, por exemplo, em uma receita de bolo. Ela lista ingredientes e, em seguida, orienta o que deve ser feito: misturar a farinha com os ovos, acrescentar o açúcar, ligar o forno, assar a massa por um tempo determinado e, por fim, retirar o bolo pronto. Essa é uma descrição exata de um algoritmo: existe um início (separar ingredientes), uma sequência lógica de passos (misturar, assar) e um final previsível (o bolo pronto). Outro exemplo: trocar o pneu de um carro. O algoritmo poderia ser descrito assim: levantar o carro com o macaco, retirar os parafusos, remover a roda furada, colocar o estepe, recolocar os parafusos, abaixar o carro. Esse processo também tem começo, meio e fim, segue uma ordem específica e não pode ser ambíguo. Esses exemplos mostram que algoritmos fazem parte do nosso cotidiano. Sempre que seguimos uma sequência lógica para resolver algo, estamos, de certo modo, executando um algoritmo. O que a programação faz é traduzir esses algoritmos para uma linguagem que o computador consiga entender e executar.</p>
+
+  <h2>Do Algoritmo Ao Programa</h2>
+    <p>Se algoritmos já existem na nossa vida diária, por que precisamos de linguagens de programação? A resposta está no fato de que o computador só entende uma linguagem extremamente limitada: a linguagem de máquina, formada por combinações de 0s e 1s. Escrever diretamente nessa linguagem seria não apenas trabalhoso, mas praticamente impossível para seres humanos. Para resolver esse problema, foram criadas linguagens de programação como C, Python, Java e muitas outras. Essas linguagens permitem que nós, humanos, descrevamos algoritmos de forma mais próxima do nosso raciocínio lógico. Porém, o computador ainda não entende diretamente C ou Python. É aí que entra o compilador: um programa especial que traduz o código que escrevemos (chamado de código-fonte) para a linguagem de máquina que o computador pode executar. Podemos visualizar esse processo como uma espécie de tradução entre idiomas. Imagine que você escreve uma carta em português, mas o destinatário só entende japonês. O compilador é como um tradutor que pega o texto em português e entrega uma versão em japonês para que o receptor compreenda.</p>
+
+  <h2>Como Os Programas São Organizados</h2>
+    <p>Existem diferentes formas de organizar programas, conhecidas como paradigmas de programação. No início do nosso aprendizado, vamos nos concentrar no paradigma imperativo (também chamado de procedural). Nesse paradigma, um programa é construído como uma sequência de instruções executadas passo a passo, em ordem lógica, até que se chegue a um resultado. Isso combina perfeitamente com a ideia de algoritmos: você descreve o que deve ser feito, na ordem em que deve ser feito, e o computador executa exatamente dessa forma.</p>
+
+  <h2>O Primeiro Contato Com A linguagem C</h2>
+    <p>Chegou a hora de olhar para a estrutura de um programa em C. Todo programa nessa linguagem segue um formato básico, que é quase como uma “receita” obrigatória. Veja o exemplo:</p>
+        <pre class="code-block"><code>
+      #<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span>
+        <span class="type">int</span> <span class="function">Main</span>()
+        {
+          <span class="keyword">return</span> <span class="number">0</span>;
+        }
+        </code></pre>
+    <p> Esse é o esqueleto de qualquer programa em C. Vamos entender cada parte:</p>
+    <ul>
+      <li>A linha #include <stdio.h> serve para incluir uma biblioteca com funções de entrada e saída. Isso significa que, se quisermos mostrar algo na tela ou ler algo do teclado, precisamos dessa biblioteca. É como se estivéssemos abrindo uma caixa de ferramentas antes de começar um trabalho.</li>
+      <li>A linha int main() define a função principal do programa. Todo programa em C começa a ser executado por essa função. É o ponto de partida, o “início da jornada”.</li>
+      <li>As chaves { } delimitam o corpo do programa. Tudo o que está dentro delas será executado.</li>
+      <li>Por fim, return 0; indica que o programa terminou com sucesso. Esse retorno é uma convenção, um jeito do programa avisar ao sistema operacional que deu tudo certo.</li>
+    </ul>
+
+<h2> O Clássico Hello World</h2>
+    <p>Agora, vamos escrever o programa mais famoso do mundo da programação: o Hello World.</p>
+      <pre class="code-block"><code>
+      #<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span>
+        <span class="type">int</span> <span class="function">Main</span>()
+        {
+          <span class="function">printf</span>(<span class="string">"Hello World"</span>);
+          <span class="keyword">return</span> <span class="number">0</span>;
+        }
+        </code></pre>
+    <p>Esse pequeno programa tem apenas uma função: mostrar a frase “Hello, World!” na tela. Embora pareça simples, ele é simbólico porque representa o primeiro contato de qualquer pessoa com a programação: você escreve uma instrução, manda o computador executar, e ele obedece. Na linha printf("Hello, World!\n");, usamos a função printf para imprimir uma mensagem. O \n dentro das aspas indica uma quebra de linha, ou seja, é como se tivéssemos apertado a tecla Enter. Rodar esse programa e ver o texto aparecendo na tela pode parecer trivial, mas é o primeiro passo para entender que estamos, de fato, conversando com a máquina.</p>
+
+<h2>Experimentos Com Printf</h2>
+    <p>Para consolidar o aprendizado, é importante brincar com o printf. Vamos ver um exemplo mais elaborado:</p>
+        <pre class="code-block"><code>
+      #<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span>
+        <span class="type">int</span> <span class="function">Main</span>()
+        {
+          <span class="function">printf</span>(<span class="string">"Meu Nome É Ana\n"</span>);
+          <span class="function">printf</span>(<span class="string">"Estou Aprendendo A Programar Em C\n"</span>);
+          <span class="function">printf</span>(<span class="string">"E Este É Meu Primeiro Programa!\n"</span>);
+          <span class="keyword">return</span> <span class="number">0</span>;
+        }
+        </code></pre>
+    <p>A saída será:</p>
+        <pre class="code-block"><code>
+Meu nome é Ana
+Estou aprendendo a programar em C
+E este é meu primeiro programa!
+        </code></pre>
+    <p>Aqui, usamos "\n" para garantir que cada mensagem apareça em uma linha diferente. Sem o \n, todas as frases ficariam grudadas em uma única linha, o que deixaria a saída desorganizada. Essa é uma das primeiras lições práticas: aprender a controlar a saída na tela é fundamental para que possamos exibir resultados de forma legível.</p>
+
+<h2> Do Código Ao Executável</h2>
+    <p>Agora você deve estar se perguntando: como esse texto que escrevemos vira um programa de verdade? O processo acontece em etapas:</p>
+    <ol>
+        <li>Primeiro, você escreve o código em um arquivo de texto, que normalmente tem a extensão .c. Esse é o chamado código-fonte.</li>
+        <li>Em seguida, o compilador entra em ação e transforma esse código em um formato intermediário chamado código objeto, que ainda não é diretamente executável.</li>
+        <li>Por fim, o compilador gera o arquivo executável, que é o programa pronto para rodar no seu computador.</li>
+    </ol>
+    <p>No Windows, esse arquivo geralmente tem a extensão .exe. No Linux, costuma não ter extensão, mas pode ser executado do mesmo jeito. Para o programador iniciante, não é necessário se preocupar demais com esses detalhes técnicos. O importante é entender que o compilador é o responsável por traduzir o que você escreveu em C para a linguagem que o computador realmente entende.</p>
+
+<h2>Erros: parte inevitável do processo</h2>
+    <p>Nenhum programador, por mais experiente que seja, escreve código perfeito de primeira. Erros fazem parte da rotina, e aprender a lidar com eles é parte fundamental do aprendizado.
+Um exemplo simples:</p>
+    <pre class="code-block"><code>
+        <span class="function">printf</span>(<span class="string">"Hello World"</span>)
+    </code></pre>
+    <p>Se você esquecer o ponto e vírgula no final, o compilador mostrará uma mensagem de erro parecida com esta:</p>
+    <pre class="code-block"><code>
+        <span class="function">error</span>: expected <span class="string">";"</span>before expected <span class="string">";"</span> token
+    </code></pre>
+    <p>Isso significa que o compilador esperava encontrar um ponto e vírgula antes da chave de fechamento. Para corrigir, basta adicionar o ;. Com o tempo, você perceberá que aprender a interpretar mensagens de erro é quase uma habilidade própria da programação. O compilador sempre “fala” com você — às vezes de forma meio enigmática —, mas o que ele está dizendo é exatamente onde e por que algo não deu certo.</p>
+<h2>Conclusão</h2>
+    <p>Nesta primeira aula, construímos a base conceitual que será necessária para avançar. Aprendemos que programar é dar instruções ao computador, que essas instruções seguem a lógica de algoritmos, que o computador só entende linguagem de máquina e que precisamos de linguagens de programação e compiladores para intermediar essa comunicação. Vimos também a estrutura mínima de um programa em C, escrevemos o tradicional “Hello World”, aprendemos a usar printf para exibir mensagens, entendemos o papel do compilador e vimos como lidar com erros básicos. Esses são os primeiros passos em uma jornada maior. Nos próximos módulos, vamos aprender a tornar nossos programas interativos, lendo informações digitadas pelo usuário e realizando cálculos com elas. É aí que a programação começa a ganhar vida e utilidade prática.</p>
+<h2> Exercicio Para Fixar</h2>
+
+  <div class="quiz-container">
+        <h1>Quiz - Módulo 1</h1>
+
+        <div class="question"></div>
+        
+        <div class="options">
+            <button onclick="checkAnswer(0)">Opção 1</button>
+            <button onclick="checkAnswer(1)">Opção 2</button>
+            <button onclick="checkAnswer(2)">Opção 3</button>
+        </div>
+
+        <div class="feedback"></div>
+
+        <div class="programming-icon">
+            <i>💻</i> <span></span>
+        </div>
+    </div>
+  <a href="bemvindos.php" style="color:lightblue;">Voltar</a>
+      <script>
+        const questions = [
+            {
+                question: "Qual é o tipo de dado usado para armazenar um número inteiro em C?",
+                options: ["int", "float", "char"],
+                correctAnswer: 0
+            },
+            {
+                question: "Qual símbolo é usado para comentar uma linha em C?",
+                options: ["//", "/* */", "#"],
+                correctAnswer: 0
+            },
+            {
+                question: "Qual é a função usada para imprimir na tela em C?",
+                options: ["printf", "cin", "scanf"],
+                correctAnswer: 0
+            },
+            {
+                question: "O que significa o operador '==' em C?",
+                options: ["Atribuição", "Comparação", "Incremento"],
+                correctAnswer: 1
+            },
+            {
+                question: "Como você declara uma variável em C?",
+                options: ["int x;", "int = x;", "x int;"],
+                correctAnswer: 0
+            },
+            {
+                question: "Qual é a função usada para ler uma entrada de teclado em C?",
+                options: ["scanf", "printf", "cin"],
+                correctAnswer: 0
+            },
+            {
+                question: "O que faz a função 'return' em C?",
+                options: ["Finaliza o programa", "Retorna um valor", "Exibe um valor na tela"],
+                correctAnswer: 1
+            },
+            {
+                question: "Qual é a função para alocar memória dinamicamente em C?",
+                options: ["malloc", "free", "calloc"],
+                correctAnswer: 0
+            },
+            {
+                question: "O que significa a palavra-chave 'void' em C?",
+                options: ["Tipo de dado inteiro", "Sem tipo de dado", "Tipo de dado booleano"],
+                correctAnswer: 1
+            },
+            {
+                question: "Como se chama a estrutura de repetição que executa enquanto uma condição for verdadeira?",
+                options: ["while", "for", "do-while"],
+                correctAnswer: 0
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let correctAnswers = 0;  // Variável para contar os acertos
+
+        // Função para exibir as perguntas
+        function displayQuestion() {
+            const question = questions[currentQuestionIndex];
+            document.querySelector(".question").innerText = question.question;
+            const buttons = document.querySelectorAll(".options button");
+
+            question.options.forEach((option, index) => {
+                buttons[index].innerText = option;
+            });
+
+            document.querySelector(".feedback").innerText = "";
+            document.querySelector(".feedback").className = "feedback";
+        }
+
+        // Função para verificar a resposta
+        function checkAnswer(selectedIndex) {
+            const question = questions[currentQuestionIndex];
+            const feedbackElement = document.querySelector(".feedback");
+
+            // Verificar a resposta
+            if (selectedIndex === question.correctAnswer) {
+                feedbackElement.innerText = "Resposta Correta!";
+                feedbackElement.className = "feedback correct";
+                correctAnswers++;  // Incrementa o número de acertos
+            } else {
+                feedbackElement.innerText = "Resposta Errada!";
+                feedbackElement.className = "feedback wrong";
+            }
+
+            // Avançar para a próxima pergunta após um curto tempo
+            setTimeout(() => {
+                currentQuestionIndex++;
+                if (currentQuestionIndex < questions.length) {
+                    displayQuestion();
+                } else {
+                    // Exibir o resultado final com a quantidade de acertos
+                    document.querySelector(".question").innerText = `Quiz Finalizado! Você acertou ${correctAnswers} de ${questions.length} perguntas.`;
+                    document.querySelector(".options").style.display = "none"; // Ocultar as opções de resposta
+                    document.querySelector(".feedback").style.display = "none"; // Remover o feedback
+                }
+            }, 1500); // Espera 1.5 segundos antes de passar para a próxima pergunta
+        }
+
+        // Inicialização do Quiz
+        displayQuestion();
+    </script>
+</body>
+</html>

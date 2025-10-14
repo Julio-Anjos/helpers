@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Módulo 9 - Modularização com funções</title>
+    <style>
+        code {
+            font-size: 20px;
+        }
+        span {
+            font-size: 20px;
+        }
+        p {
+          font-size: 20px;
+          text-align: justify;
+        }
+
+        li {
+          font-size: 20px;
+          text-align: justify;
+        }
+       /* Container do quiz */
+        .quiz-container {
+            background-color: #1e1e1e;
+            border-radius: 15px;
+            width: 80%;  /* Aumentei o tamanho da largura */
+            max-width: 900px;  /* Aumentei o max-width */
+            padding: 40px;  /* Aumentei o padding interno */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            transition: transform 0.5s ease;
+        }
+
+        /* Título do Quiz */
+        h1 {
+            text-align: center;
+            color: #00b0ff;
+            font-size: 50px;
+            font-weight: bold;
+            margin-bottom: 40px;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Estilos das perguntas */
+        .question {
+            font-size: 28px;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+
+        /* Estilos das opções de resposta */
+        .options button {
+            background-color: #00b0ff;
+            border: none;
+            padding: 15px 30px;
+            margin: 15px;
+            font-size: 22px;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .options button:hover {
+            background-color: #0088cc;
+            transform: translateY(-5px);
+        }
+
+        /* Feedback sobre a resposta */
+        .feedback {
+            text-align: center;
+            font-size: 24px;
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .correct {
+            color: #32cd32; /* Verde para respostas corretas */
+            background-color: rgba(50, 205, 50, 0.1);
+        }
+
+        .wrong {
+            color: #ff6347; /* Vermelho para respostas erradas */
+            background-color: rgba(255, 99, 71, 0.1);
+        }
+
+        /* Decoração com elementos de programação */
+        .programming-icon {
+            font-size: 24px;
+            color: #00b0ff;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .programming-icon i {
+            margin-right: 10px;
+        }
+
+        /* Animações de feedback */
+        .feedback {
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .code-block {
+            background-color: #1e1e1e; /* fundo escuro estilo VS Code */
+            color: #d4d4d4;           /* cor padrão do texto */
+            padding: 15px;
+            border-radius: 8px;
+            font-family: "Fira Code", "Courier New", monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            overflow-x: auto;         /* rolagem horizontal se o código for longo */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        .type {
+            color: #4ec9b0;      /* um azul-esverdeado elegante */
+            font-weight: bold;   /* destaque extra */
+        }
+        .parameter { color: #9cdcfe; }   /* azul claro para parâmetros */
+        .property  { color: #dcdcaa; }   /* amarelinho para atributos */
+
+/* exemplo de destaque de sintaxe simples */
+        .code-block .keyword { color: #569cd6; }   /* azul para palavras-chave */
+        .code-block .string { color: #ce9178; }    /* marrom-avermelhado para strings */
+        .code-block .function { color: #dcdcaa; }  /* amarelo para funções */
+        .code-block .number { color: #c0e9ff}
+        .code-block .comment { color: rgb(121, 116, 116)}
+        .code-block .logic_operator { color: rgb(219, 19, 59)}
+        .exemplo-um {
+          text-align: center;
+        }
+        .img-size {
+          height: 256px;
+          width: 360px;
+        }
+    </style>
+
+</head>
+<body style="background:#0b0f1e; color:white; font-family:sans-serif;">
+  <h1 style="font-size:30px; text-align:left;">Módulo 9: Dividir para Conquistar: Introdução à Modularização com Funções em C</h1>
+  <p>Olá! Em nossa jornada até aqui, aprendemos a criar programas que tomam decisões, repetem ações e organizam dados em estruturas cada vez mais complexas, como vetores e matrizes. Nossos programas cresceram em capacidade, mas também em tamanho e complexidade. E se houvesse uma maneira de organizar esse código em blocos lógicos, reutilizáveis e mais fáceis de entender? É exatamente isso que veremos hoje, entrando no mundo da modularização através de funções. Imagine que você está construindo uma casa. Em vez de tentar erguê-la como um bloco único e maciço, você constrói paredes, instala janelas, coloca portas - cada parte com uma função específica. Na programação, as funções são exatamente essas "partes" especializadas que, quando unidas, formam o programa completo.</p>
+    <h2>O Programa como um Conjunto de Funções: Saindo da Linearidade</h2>
+      <p>Até agora, praticamente todo o nosso código foi escrito dentro da função main(). Em C, a main() é especial: é o ponto de partida obrigatório que o sistema operacional procura para executar o programa. Mas ela não precisa fazer tudo sozinha. Na verdade, ela não deveria. Um programa em C é, em sua essência, um conjunto de funções trabalhando juntas. A main() é a função principal, a "gerente" do projeto, que coordena a chamada de outras funções especializadas - sejam elas funções que já vêm prontas em bibliotecas (como printf(), scanf(), pow()), sejam funções que nós mesmos criamos.
+      <br>Criar uma função é como escrever uma pequena receita com um nome. Você define:</p>
+      <ol>
+        <li>O que ela faz (o bloco de código entre chaves {}).</li>
+        <li>Se ela precisa de ingredientes (os parâmetros ou argumentos).</li>
+        <li>Se ela produz um resultado final (o valor de retorno).</li>
+      </ol>
+      <p>Vamos começar pelo tipo mais simples de função.</p>
+    <h2>Funções void: Os Atores que Executam uma Ação</h2>
+      <p>A palavra-chave void significa "vazio". Uma função void é aquela que não retorna um valor após sua execução. Ela é útil para realizar uma ação específica, como imprimir uma mensagem na tela ou desenhar um menu.
+      <br>Vejamos nosso primeiro exemplo, retirado dos seus materiais:</p>
+      <ul>
+    <pre class="code-block"><code>
+      #<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span>
+      
+      <span class="comment">// Definição da função 'mensagem'</span>
+      <span class="keyword">void</span> mensagem() {
+          <span class="function">printf</span>(<span class="string">"\n\tOla!"</span>);
+      }
+
+      <span class="comment">// Função principal</span>
+      <span class="type">int</span> main() {
+          mensagem();   <span class="comment">// Chamada da função 'mensagem'</span>
+          <span class="function">printf</span>(<span class="string">"Tudo bem?\n"</span>);
+          <span class="keyword">return</span> <span class="number">0</span>;
+      }
+    </code></pre>
+      </ul>
+      <p>Neste código:</p>
+      <ul>
+        <li>void mensagem(): Declaramos uma função chamada mensagem que não recebe argumentos (parênteses vazios) e não retorna valor (void).</li>
+        <li>{ ... }: O bloco de código dentro das chaves é o corpo da função, que será executado quando ela for chamada.</li>
+        <li>mensagem();: Na main(), chamamos a função pelo seu nome. Quando o programa chega nessa linha, ele "pula" para executar o código dentro de mensagem() e, ao terminar, volta para a linha seguinte na main().</li>
+      </ul>
+      <p>A grande vantagem? Se precisarmos exibir "Olá!" em dez lugares diferentes do programa, basta escrever mensagem(); dez vezes. Se precisarmos mudar a mensagem, alteramos apenas um lugar: dentro da função.</p>
+
+    <h2>Funções que Retornam Valores: Os Calculistas Especializados</h2>
+      <p>Mais poderosas são as funções que realizam um cálculo ou operação e retornam um resultado. Elas funcionam como uma pergunta que fazemos ao programa. Por exemplo, "qual é o quadrado de 5?". Nesse caso, substituímos void pelo tipo de dado do valor que será retornado (como int, float, char). Para enviar o resultado de volta para quem a chamou, usamos o comando return.</p>
+      <ul>
+    <pre class="code-block"><code>
+      #<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span>
+      
+      <span class="comment">// Função que calcula o quadrado de um número inteiro</span>
+      <span class="type">int</span> <span class="function">quadrado</span>(<span class="type">int</span> x) {   <span class="comment">// Recebe um inteiro 'x' como argumento</span>
+          <span class="type">int</span> resultado = x * x;
+          <span class="keyword">return</span> <span class="number">resultado</span>;    <span class="comment">// Retorna um valor inteiro</span>
+      }
+
+      <span class="type">int</span> <span class="function">main()</span> {
+          <span class="type">int</span> numero, resultado;
+          <span class="function">printf</span>(<span class="string">"Entre com um número: "</span>);
+          <span class="function">scanf</span>(<span class="string">"%d"</span>, &numero);
+
+          resultado = <span class="function">quadrado</span>(numero);   <span class="comment">// Chamada da função. O valor retornado é armazenado em 'resultado'</span>
+          <span class="function">printf</span>(<span class="string">"O quadrado de %d é %d\n"</span>, numero, resultado);
+          <span class="keyword">return</span> <span class="number">0</span>;  
+      }
+    </code></pre>
+      </ul>
+      <p>Aqui, a mágica acontece na linha "resultado = quadrado(numero);":</p>
+      <ol>
+        <li>O valor da variável numero é copiado para o parâmetro x da função quadrado.</li>
+        <li>A função quadrado é executada, calculando x * x.</li>
+        <li>O comando return envia o valor calculado de volta para a main().</li>
+        <li>Na main(), esse valor retornado é atribuído à variável resultado.</li>
+      </ol>
+      <p>É crucial entender que a variável x dentro da função quadrado é independente da variável numero na main(). Elas podem até ter o mesmo valor, mas são entidades separadas. Isso nos leva a um conceito fundamental.</p>
+
+    <h2>Escopo de Variáveis: O Mundo Particular de Cada Função</h2>
+      <p>As variáveis declaradas dentro de uma função (incluindo a main) são chamadas de variáveis locais. Isso significa que elas só existem e são reconhecidas dentro da função onde foram declaradas. Pense em cada função como um cômodo de uma casa. Os móveis (variáveis) da sala não estão disponíveis no quarto, e vice-versa, a menos que você explicitamente os leve de um cômodo para outro (o que, em programação, fazemos passando valores como argumentos).</p>
+      <ul>
+    <pre class="code-block"><code>
+      #<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span>
+      
+      <span class="comment">// Definição da função 'mensagem'</span>
+      <span class="keyword">void</span> funcaoExemplo() {
+          <span class="type">int</span> var_local = 100;    <span class="comment">// Esta variável só existe dentro de funcaoExemplo</span>
+          <span class="function">printf</span>(<span class="string">"Dentro da função: %d\n"</span>, var_local);
+      }
+
+      <span class="type">int</span> <span class="function">main()</span> {
+        <span class="type">int</span> var_local = 50;   <span class="comment">// Esta é uma variável DIFERENTE, que só existe na main</span>
+        <span class="function">printf</span>(<span class="string">"Dentro da função: %d\n"</span>, var_local);
+
+        <span class="function">funcaoExemplo</span>();    <span class="comment">// Imprimirá 100</span>
+
+        <span class="type">int</span> var_local = 50; <span class="comment">// Ainda é 50</span>
+        <span class="keyword">return</span> <span class="number">0</span>; 
+      }
+    </code></pre>
+      </ul>
+      <p>O programa acima imprimirá:</p>
+      <ul>
+    <pre class="code-block"><code>
+        Na main, antes da funcao: 50
+        Dentro da funcao: 100
+        Na main, depois da funcao: 50
+    </code></pre>
+      </ul>
+      <p>Isso demonstra que as duas var_local são completamente independentes. Esse isolamento é uma grande vantagem, pois evita que funções interfiram acidentalmente umas nas outras.</p>
+    
+    <h2>Por que Modularizar? A Arte de Dominar a Complexidade</h2>
+      <p>Escrever programas usando funções vai muito além de evitar repetição de código. É uma questão de organização mental e gerenciamento de complexidade.</p>
+      <ol>
+        <li>Divide para Conquistar: Um problema complexo (ex.: "desenvolver um sistema de gestão escolar") é quebrado em subproblemas menores e mais manejáveis (ex.: "calcular média", "verificar aprovação", "imprimir boletim"). Cada subproblema vira uma função.</li>
+        <li>Facilita Testes e Depuração: É muito mais fácil testar e encontrar erros em uma pequena função que faz uma coisa só do que em um bloco gigante de código na main().</li>
+        <li>Promove o Reuso: Uma função bem escrita para calcular uma média pode ser usada em dezenas de programas diferentes.</li>
+        <li>Torna o Código Legível: A main() se torna uma sequência clara de chamadas de função, lendo-se quase como um sumário do que o programa faz: cadastrarAlunos(); calcularMedias(); imprimirRelatorios();.</li>
+      </ol>
+      <p>No próximo módulo, aprofundaremos nosso conhecimento em funções, explorando como trabalhar com diferentes tipos de parâmetros e como estruturar melhor nossos programas com protótipos de funções. Por hoje, o exercício é começar a pensar de forma modular. Ao enfrentar um problema de programação, pergunte-se: "Quais são as tarefas menores e repetitivas que compõem este problema?" Essas tarefas são fortes candidatas a se tornarem funções. Comece criando funções simples, como a que imprime uma linha de asteriscos ou que lê e retorna uma idade do usuário. Esse é o primeiro passo para escrever código não apenas que funcione, mas que seja elegante, robusto e fácil de manter.
+      <br><br>Até a próxima!</p>
+  <a href="bemvindos.php" style="color:lightblue;">Voltar</a>
+</body>
+</html>
