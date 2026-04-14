@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Módulos - GuiaC-Plat</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #09095a;
+      font-family: Arial, sans-serif;
+      color: white;
+      height: 100vh;
+    }
+
+    .menu-toggle {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      cursor: pointer;
+      z-index: 1000;
+    }
+
+    .menu-toggle div {
+      width: 30px;
+      height: 5px;
+      background-color: white;
+      margin: 6px 0;
+      border-radius: 3px;
+    }
+
+    .sidebar {
+      position: fixed;
+      left: -220px;
+      top: 0;
+      height: 100%;
+      width: 200px;
+      background-color: #03034e;
+      padding-top: 60px;
+      transition: left 0.3s ease;
+    }
+
+    .sidebar.active {
+      left: 0;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .sidebar ul li {
+      padding: 15px 20px;
+      border-bottom: 1px solid #222;
+    }
+
+    .sidebar ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      display: block;
+    }
+
+    .sidebar ul li:hover {
+      background-color: #1a1a7a;
+    }
+
+    .content {
+      text-align: center;
+      padding-top: 80px;
+      transition: margin-left 0.3s ease;
+    }
+
+    .sidebar.active ~ .content {
+      margin-left: 200px;
+    }
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 40px;
+    }
+
+    .module-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      padding: 0 20px 60px;
+    }
+
+    .module-button {
+      width: 180px;
+      height: 100px;
+      background-color: transparent;
+      color: white;
+      border: 2px solid white;
+      border-radius: 20px;
+      font-size: 20px;
+      cursor: pointer;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .module-button:hover {
+      background-color: white;
+      color: #09095a;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Menu Hamburguer -->
+  <div class="menu-toggle" onclick="toggleMenu()">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+
+  <!-- Menu Lateral -->
+  <div class="sidebar" id="sidebar">
+    <ul>
+      <li><a href="modulos.html">Módulos</a></li>
+      <li><a href="progresso.html">Progresso</a></li>
+      <li><a href="desafios.html">Desafios</a></li>
+    </ul>
+  </div>
+
+  <!-- Conteúdo Principal -->
+  <div class="content">
+    <h1>MÓDULOS</h1>
+    <div class="module-grid">
+      <a href="modulo1.html" class="module-button">Módulo 1</a>
+      <a href="modulo2.html" class="module-button">Módulo 2</a>
+      <a href="modulo3.html" class="module-button">Módulo 3</a>
+      <a href="modulo4.html" class="module-button">Módulo 4</a>
+      <a href="modulo5.html" class="module-button">Módulo 5</a>
+      <a href="modulo6.html" class="module-button">Módulo 6</a>
+      <a href="modulo7.html" class="module-button">Módulo 7</a>
+      <a href="modulo8.html" class="module-button">Módulo 8</a>
+      <a href="modulo9.html" class="module-button">Módulo 9</a>
+      <a href="modulo10.html" class="module-button">Módulo 10</a>
+    </div>
+  </div>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById('sidebar').classList.toggle('active');
+    }
+  </script>
+
+</body>
+</html>
